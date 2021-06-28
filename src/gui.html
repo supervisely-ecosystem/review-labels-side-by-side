@@ -1,0 +1,17 @@
+<div class="fflex">
+    <el-button class="regular" type="primary" @click="command('show_info')">Button</el-button>
+    <el-select v-model="data.userNames" multiple placeholder="Select">
+        <el-option
+                v-for="item in data.options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+        </el-option>
+    </el-select>
+</div>
+<sly-field title="GalleryTitle"
+           description="Description">
+    <sly-grid-gallery :content="data.CMGallery.content"
+                      :options="data.CMGallery.options">
+    </sly-grid-gallery>
+</sly-field>
