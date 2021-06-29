@@ -1,5 +1,5 @@
 <div>
-    <div class="fflex">
+    <div class="fflex" style="align-items: flex-start;">
         <div>
             <el-button class="regular" type="primary" @click="command('show_info')">Update</el-button>
             <el-select v-model="state.userNames" multiple placeholder="Select">
@@ -17,13 +17,13 @@
             </sly-field>
         </div>
         <el-tabs type="border-card" class="mt10">
-            <el-tab-pane label="Objects">
+            <el-tab-pane label="Objects" style="height: 415px; overflow-y: auto">
                 {% include 'src/ui/objects.html' %}
             </el-tab-pane>
-            <el-tab-pane label="Tags">
+            <el-tab-pane label="Tags" style="height: 200px; overflow-y: auto">
                 {% include 'src/ui/tags.html' %}
             </el-tab-pane>
-            <el-tab-pane label="Filters">
+            <el-tab-pane label="Filters" style="height: 200px; overflow-y: auto">
                 {% include 'src/ui/filters.html' %}
             </el-tab-pane>
         </el-tabs>
