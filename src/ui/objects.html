@@ -12,7 +12,6 @@
         text-align: left;
         }
     </sly-style>
-    Objects tab
     <table class="beautiful-table">
         <thead>
         <tr>
@@ -27,9 +26,9 @@
         <tbody>
         <tr v-for="row in data.myRows">
             <td v-for="col in data.myColumns">
-                <div v-if="col.title === 'Class'">
-                    <i class="zmdi zmdi-circle mr5" :style="{color: row[col.title]}"></i> {{row[col.title]}}
-                    <!--                    <el-checkbox v-model="state.classChecked[row[col.title]]">{{row[col.title]}}</el-checkbox>-->
+                <div v-if="col.title === 'Class'" style="text-align: left;">
+<!--                    <i class="zmdi zmdi-circle mr5" :style="{color: row[col.title]}"></i> {{row[col.title]}}-->
+                    <el-checkbox v-model="state.classChecked[row[col.title]]">{{row[col.title]}}</el-checkbox>
                 </div>
                 <div v-if="col.title === 'Shape'">
                     <i class="zmdi zmdi-shape mr5"></i> {{row[col.title]}}
