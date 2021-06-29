@@ -23,8 +23,8 @@ def init(data, state):
     data["myColumns"] = columns
     data["myRows"] = rows
     state["classChecked"] = {
-        "lemon": False,
-        "kiwi": True
+        # "lemon": False,
+        # "kiwi": True
     }
 
 
