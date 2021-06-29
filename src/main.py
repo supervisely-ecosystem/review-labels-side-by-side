@@ -16,6 +16,19 @@ def show_info(api: sly.Api, task_id, context, state, app_logger):
     ui.objects.update_table(api, ann_1, state)
 
 
+@g.my_app.callback("refresh_annotations")
+@sly.timeit
+def refresh_annotations(api: sly.Api, task_id, context, state, app_logger):
+    print('manual_selected_image_changed')
+    print('context = ', context)
+    print('state = ', state)
+    selected_lablers = state['userNames']
+    show_gallery(api, context, selected_lablers)
+    ui.objects.update_table(api, ann_1, state)
+    # @TODO: replace annotation ?
+    # @TODO: add new annotation
+
+
 def show_gallery(api, context, selected_lablers):
     global ann_1
     print('Show_images: ', context)
