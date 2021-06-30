@@ -38,6 +38,7 @@ def main():
     g.my_app.compile_template(g.root_source_dir)
     g.my_app.run(data=data, state=state)
 
+#@TODO: add laodings
 #TODO: refresh ann cache after copy + refresh UI (hide user's annotations)
 #@TODO: reimplement copy figures to handle job stats
 #@TODO: get job classes and tags and use only them in filters
