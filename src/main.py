@@ -20,10 +20,9 @@ def manual_selected_image_changed(api: sly.Api, task_id, context, state, app_log
     ann = cache.get_annotation(project_id, image_id)
 
     gallery.refresh(project_meta, image_info.full_storage_url, ann)
-    users = filters.get_users(ann)
-    classes = filters.get_classes(ann)
-    filters.refresh(users, classes)
-
+    users = filters.get_users(context, ann)
+    classes = filters.get_classes(context, ann)
+    filters.refresh(context, users, classes)
 
 
 def main():
@@ -36,11 +35,11 @@ def main():
     state = {}
     ui.init(data, state)
 
-    #print(json.dumps(g.api.annotation.download(image_id=908212).annotation, indent=4))
-
     g.my_app.compile_template(g.root_source_dir)
     g.my_app.run(data=data, state=state)
 
-
+#TODO: refresh ann cache after copy + refresh UI (hide user's annotations)
+#@TODO: reimplement copy figures to handle job stats
+#@TODO: get job classes and tags and use only them in filters
 if __name__ == "__main__":
     sly.main_wrapper("main", main)

@@ -5,6 +5,7 @@ import globals as g
 project2meta = {}  # project_id -> project_meta
 image2info = {}
 image2ann = {}  # image_id -> annotation
+user2login = {}
 
 
 def get_image_path(image_id):
@@ -56,3 +57,16 @@ def clear():
 def update_project_meta(project_id, project_meta: sly.ProjectMeta):
     g.api.project.update_meta(project_id, project_meta.to_json())
     get_meta(project_id, optimize=False)
+
+
+def update_ann(project_id, image_id, ann: sly.Annotation):
+    g.api.annotation.upload_ann(image_id, ann)
+    get_annotation(project_id, image_id, optimize=False)
+
+
+def get_user_login(user_id):
+    if user_id not in user2login:
+        info = g.api.user.get_member_info_by_id(g.team_id, user_id)
+        user2login[user_id] = info.login
+    login = user2login[user_id]
+    return login

@@ -1,11 +1,11 @@
-<div style="width: 250px;" class="ml10 mr10">
+<div style="width: 250px;" class="ml10 mr10 mb15">
     <sly-field title="Filter by users" v-if="data.users">
         <div class="fflex">
             <el-button type="text" size="mini" @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
-                <i class="zmdi zmdi-unfold-more mr5"></i>Select all
+                <i class="zmdi zmdi-check-all mr5"></i>Select all
             </el-button>
             <el-button type="text" size="mini" @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
-                <i class="zmdi zmdi-unfold-more mr5"></i>Deselect all
+                <i class="zmdi zmdi-square-o mr5"></i>Deselect all
             </el-button>
         </div>
         <table class="beautiful-table al" style="width: 100%;">
@@ -26,10 +26,10 @@
     <sly-field title="Filter by classes" v-if="data.classes">
         <div class="fflex">
             <el-button type="text" size="mini" @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
-                <i class="zmdi zmdi-unfold-more mr5"></i>Select all
+                <i class="zmdi zmdi-check-all mr5"></i>Select all
             </el-button>
             <el-button type="text" size="mini" @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
-                <i class="zmdi zmdi-unfold-more mr5"></i>Deselect all
+                <i class="zmdi zmdi-square-o mr5"></i>Deselect all
             </el-button>
         </div>
         <table class="beautiful-table al" style="width: 100%;">
@@ -47,15 +47,21 @@
             </tbody>
         </table>
     </sly-field>
-    <el-button v-if="data.classes" class="regular" type="primary" @click="command('filter')">Filter</el-button>
+    <el-button
+            v-if="data.classes"
+            class="regular" size="small"
+            type="primary"
+            @click="command('filter')">
+        Filter
+    </el-button>
 
     <sly-field title="Filtered objects" v-if="data.objects">
         <div class="fflex">
             <el-button type="text" size="mini" @click="Object.keys(state.objCheck).forEach(v => state.objCheck[v] = true)">
-                <i class="zmdi zmdi-unfold-more mr5"></i>Select all
+                <i class="zmdi zmdi-check-all mr5"></i>Select all
             </el-button>
             <el-button type="text" size="mini" @click="Object.keys(state.objCheck).forEach(v => state.objCheck[v] = false)">
-                <i class="zmdi zmdi-unfold-more mr5"></i>Deselect all
+                <i class="zmdi zmdi-square-o mr5"></i>Deselect all
             </el-button>
         </div>
         <table class="beautiful-table al" style="width: 100%;">
@@ -76,66 +82,17 @@
         </table>
     </sly-field>
     <el-button v-if="data.objects"
-               class="regular"
+               class="regular" size="small"
                type="primary"
                @click="command('show_selected_objects')">
         Show selected objects
     </el-button>
 
     <el-button v-if="data.objects"
-               class="regular mt10"
+               style="margin-left: 0px; margin-top: 10px;"
+               class="regular" size="small"
                type="success"
                @click="command('copy_objects')">
-        Copy objects to working area
+        Copy selected objects <i class="zmdi zmdi-arrow-right ml5"></i>
     </el-button>
-
-
-    <div>321</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <div>123</div>
-    <el-button class="regular" type="primary" @click="command('show_info')">Update</el-button>
-    <el-button class="regular" type="primary" @click="command('refresh_annotations')">Refresh</el-button>
 </div>
