@@ -1,1 +1,101 @@
-<div>Filters tab</div>
+<div style="width: 250px;" class="ml10 mr10">
+    <sly-field title="Filter labels by users">
+        <div class="fflex" v-if="data.users">
+            <el-button type="text" size="mini" @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
+                <i class="zmdi zmdi-unfold-more mr5"></i>Select all
+            </el-button>
+            <el-button type="text" size="mini" @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
+                <i class="zmdi zmdi-unfold-more mr5"></i>Deselect all
+            </el-button>
+        </div>
+        <table class="beautiful-table al" v-if="data.users" style="width: 100%;">
+            <thead>
+            <th>User</th>
+            <th>Objects count</th>
+            </thead>
+            <tbody>
+            <tr v-for="user in data.users">
+                <td>
+                    <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}</el-checkbox>
+                </td>
+                <td>{{user.count}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </sly-field>
+    <sly-field title="Filter labels by classes">
+        <div class="fflex" v-if="data.classes">
+            <el-button type="text" size="mini" @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
+                <i class="zmdi zmdi-unfold-more mr5"></i>Select all
+            </el-button>
+            <el-button type="text" size="mini" @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
+                <i class="zmdi zmdi-unfold-more mr5"></i>Deselect all
+            </el-button>
+        </div>
+        <table class="beautiful-table al" v-if="data.classes" style="width: 100%;">
+            <thead>
+            <th>Class</th>
+            <th>Objects count</th>
+            </thead>
+            <tbody>
+            <tr v-for="objClass in data.classes">
+                <td>
+                    <el-checkbox class="small" v-model="state.classCheck[objClass.name]">{{objClass.name}}</el-checkbox>
+                </td>
+                <td>{{objClass.count}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </sly-field>
+    <el-button class="regular" type="primary" @click="command('filter')">Filter</el-button>
+
+
+    <div>321</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <div>123</div>
+    <el-button class="regular" type="primary" @click="command('show_info')">Update</el-button>
+    <el-button class="regular" type="primary" @click="command('refresh_annotations')">Refresh</el-button>
+</div>

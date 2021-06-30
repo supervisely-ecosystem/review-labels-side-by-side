@@ -1,32 +1,19 @@
 <div>
-    <div class="fflex mt10" style="align-items: flex-start;">
-        <div>
-            <el-select v-model="state.userNames" multiple placeholder="Select">
-                <el-option
-                        v-for="item in data.options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value">
-                </el-option>
-            </el-select>
-            <sly-field>
-                <sly-grid-gallery :content="data.previewContent"
-                                  :options="data.previewOptions">
-                </sly-grid-gallery>
-            </sly-field>
-            <el-button class="regular" type="primary" @click="command('show_info')">Update</el-button>
-            <el-button class="regular" type="primary" @click="command('refresh_annotations')">Refresh</el-button>
-        </div>
-        <el-tabs type="border-card" class="ml10">
-            <el-tab-pane label="Objects" style="height: 350px; overflow-y: auto">
-                {% include 'src/ui/objects.html' %}
-            </el-tab-pane>
-            <el-tab-pane label="Tags" style="height: 200px; overflow-y: auto">
-                {% include 'src/ui/tags.html' %}
-            </el-tab-pane>
-            <el-tab-pane label="Filters" style="height: 200px; overflow-y: auto">
-                {% include 'src/ui/filters.html' %}
-            </el-tab-pane>
-        </el-tabs>
+    <sly-style>
+        .beautiful-table { border-collapse: collapse; }
+        .beautiful-table tr:nth-child(2n) { background-color: #f6f8fa; }
+        .beautiful-table td, .beautiful-table th {
+        border: 1px solid #dfe2e5;
+        padding: 6px 13px;
+        text-align: center;
+        line-height: 20px;
+        }
+        .beautiful-table.al td, .beautiful-table.al th {
+        text-align: left;
+        }
+    </sly-style>
+    <div class="fflex" style="align-items: flex-start;">
+        {% include 'src/ui/gallery.html' %}
+        {% include 'src/ui/filters.html' %}
     </div>
 </div>
