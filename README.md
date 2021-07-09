@@ -19,7 +19,7 @@
 </div>
 
 # Overview
-The application allows to review pre-marked images, choose the best markups and tags. Also, these markup and tags can be transferred to the original image for your own futher corrections.
+Application allows to review pre-marked images, choose the best markups and tags. Also, these markup and tags can be transferred to the original image for your own futher corrections.
 
 
 # How To Use
