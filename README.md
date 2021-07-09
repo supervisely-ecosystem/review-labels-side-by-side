@@ -35,7 +35,11 @@ Application allows to review pre-marked by annotators image projects, choose the
  - Reviewer
  - Labelers
  - Data to Annotate (Workspace, Project, Dataset)
- - Annotation Settings(Classes, Tags, Labeler sees figures(recommended: Only own), Labeler sees tags (Only for projects with Multiple tags mode)(recommended: Only own))
+ - Annotation Settings:
+   - Classes
+   - Tags 
+   - Labeler sees figures(recommended: Only own)
+   - Labeler sees tags(recommended: Only own))
  - Images Filtering (...)
 <img src="https://i.imgur.com/zyAQkYZ.png"/>
 
