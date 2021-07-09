@@ -5,10 +5,11 @@ import cache
 
 def init(data, state):
     data["gallery"] = None
+    state['active'] = None
     pass
 
 
-def refresh(project_meta: sly.ProjectMeta, image_url, ann: sly.Annotation):
+def refresh(project_meta: sly.ProjectMeta, image_url, ann: sly.Annotation, output=False):
     content = {
         "projectMeta": project_meta.to_json(),
         "annotations": {
@@ -24,12 +25,12 @@ def refresh(project_meta: sly.ProjectMeta, image_url, ann: sly.Annotation):
         "opacity": 0.8,
         "fillRectangle": False,
     }
-
     fields = [
         {"field": "data.gallery", "payload": {"content": content, "options": options}},
     ]
     g.api.task.set_fields(g.task_id, fields)
-
+    if output:
+        return {"content": content, "options": options}
 
 # def refresh_labels(labels):
 #     fields = [
