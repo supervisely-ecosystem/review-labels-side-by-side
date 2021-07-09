@@ -28,7 +28,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 **Step 2**: Create new Labeling job: [Labeling as Scale](https://ecosystem.supervise.ly/labeling/jobs/list)
 
-<img src="https://i.imgur.com/ALgeFot.png"/>
+<img src="https://i.imgur.com/zyAQkYZ.png"/>
 
 ***SubStep 2.1***:Press `+NEW` button at top right corner
 
