@@ -34,17 +34,17 @@ Application allows to review pre-marked by annotators image projects, choose the
 ***SubStep 2.2***:Set recommended options for Project:
 <img src="https://i.imgur.com/zlWukS5.png"/>
 
-***SubStep 2.3***:Set Labeling Job: 
+***SubStep 2.3***: Create Labeling Job: set following options
  - Title
- - Reviewer
- - Labelers
+ - Reviewer(s)
+ - Labeler(s)
  - Data to Annotate: 
    - Workspace
-   - Project
-   - Dataset
+   - Project(s)
+   - Dataset(s)
  - Annotation Settings:
-   - Classes
-   - Tags 
+   - Class(es)
+   - Tag(s) 
    - Labeler sees figures(recommended: Only own)
    - Labeler sees tags(recommended: Only own))
  - Images Filtering (...)
