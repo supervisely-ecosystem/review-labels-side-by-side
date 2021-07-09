@@ -9,20 +9,18 @@ import filters
 @g.my_app.callback("manual_selected_image_changed")
 @sly.timeit
 def manual_selected_image_changed(api: sly.Api, task_id, context, state, app_logger):
-    # print('manual_selected_image_changed')
-    # manual_template(api, state, context)
-
-    project_id =  context["projectId"]
+    project_id = context["projectId"]
     image_id = context["imageId"]
 
     project_meta = cache.get_meta(project_id)
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
 
-    gallery.refresh(project_meta, image_info.full_storage_url, ann)
+    first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
     users = filters.get_users(context, ann)
     classes = filters.get_classes(context, ann)
-    filters.refresh(context, users, classes)
+    tags = filters.get_tags(context, ann)
+    filters.refresh(context, users, classes, tags, first_state)
 
 
 def main():
