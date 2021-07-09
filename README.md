@@ -34,7 +34,10 @@ Application allows to review pre-marked by annotators image projects, choose the
  - Title
  - Reviewer
  - Labelers
- - Data to Annotate (Workspace, Project, Dataset)
+ - Data to Annotate: 
+   - Workspace
+   - Project
+   - Dataset
  - Annotation Settings:
    - Classes
    - Tags 
