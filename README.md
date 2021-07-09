@@ -24,10 +24,17 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 # How To Start
 
-# How To Use
-
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
 
+**Step 2**: Create new Labeling job: [Labeling as Scale](https://ecosystem.supervise.ly/labeling/jobs/list)
+
+<img src="https://i.imgur.com/ALgeFot.png"/>
+
+***SubStep 2.1***:Press `+NEW` button at top right corner
+
+# How To Use
+
+**Step 1**: 
 **Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
 
 <img src="https://i.imgur.com/6JNfu3g.png" width="600px"/>
