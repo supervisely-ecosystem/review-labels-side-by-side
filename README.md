@@ -48,8 +48,6 @@ Application allows to review pre-marked by annotators image projects, choose the
    - Labeler sees figures(recommended: Only own)
    - Labeler sees tags(recommended: Only own))
  - Images Filtering (...)
-<img src="https://i.imgur.com/zyAQkYZ.png"/>
-
 
 # How To Use
 
