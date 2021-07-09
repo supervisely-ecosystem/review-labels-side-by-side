@@ -16,6 +16,10 @@ def init(data, state):
     data["objects"] = None
     state["objCheck"] = None
 
+    data["tags"] = None
+    state["tagCheck"] = None
+    state['firstState'] = None
+
 
 def get_users(context, ann: sly.Annotation):
     user_id = context["userId"]
@@ -55,7 +59,25 @@ def get_classes(context, ann: sly.Annotation):
     return res
 
 
-def refresh(context, users, classes):
+def get_tags(context, ann: sly.Annotation):
+    user_id = context["userId"]
+    user_login = cache.get_user_login(user_id)
+
+    tags = defaultdict(int)
+    for tag in ann.img_tags:
+        if tag.labeler_login == user_login:
+            continue
+        tags[tag.name] += 1
+    res = []
+    for name, count in tags.items():
+        res.append({
+            "name": name,
+            "count": count
+        })
+    return res
+
+
+def refresh(context, users, classes, tags, first_state=None):
     userCheck = {}
     for user_info in users:
         userCheck[user_info["login"]] = True
@@ -64,15 +86,23 @@ def refresh(context, users, classes):
     for class_info in classes:
         classCheck[class_info["name"]] = True
 
+    tagCheck = {}
+    for tag_info in tags:
+        tagCheck[tag_info["name"]] = True  # ??? name ???
+    print(first_state)
     fields = [
         {"field": "data.users", "payload": users},
         {"field": "state.userCheck", "payload": userCheck},
         {"field": "data.classes", "payload": classes},
         {"field": "state.classCheck", "payload": classCheck},
+        {"field": "data.tags", "payload": tags},
+        {"field": "state.tagCheck", "payload": tagCheck},
+        {"field": "state.firstState", "payload": first_state},
         # {"field": "data.objects", "payload": None},
         # {"field": "state.objCheck", "payload": None},
     ]
     refresh_objects_table(context, userCheck, classCheck, fields)
+    refresh_tags_table(context, userCheck, tagCheck, fields)
     g.api.task.set_fields(g.task_id, fields)
 
 
@@ -116,9 +146,10 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
 def filter(api: sly.Api, task_id, context, state, app_logger):
     userCheck = state["userCheck"]
     classCheck = state["classCheck"]
-
+    tagCheck = state["tagCheck"]
     fields = []
     refresh_objects_table(context, userCheck, classCheck, fields)
+    refresh_tags_table(context, userCheck, tagCheck, fields)
     g.api.task.set_fields(g.task_id, fields)
 
 
@@ -170,6 +201,85 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
 
     new_ann = ann.add_labels(res_labels)
     cache.update_ann(project_id, image_id, new_ann)
+
+
+# @TODO: refresh_tags_table, copy_tags
+def refresh_tags_table(context, userCheck, tagCheck, fields):
+    project_id = context["projectId"]
+    image_id = context["imageId"]
+
+    project_meta = cache.get_meta(project_id)
+    image_info = cache.get_image_info(image_id)
+    ann = cache.get_annotation(project_id, image_id)
+
+    res_tags = []
+    for tag in ann.img_tags:
+        cls_name = tag.name
+        login = tag.labeler_login
+        if userCheck.get(login, False) is True:  # and classCheck[cls_name] is True
+            res_tags.append(tag)
+
+    tags_table = []
+    tags_check = {}
+    for tag in res_tags:
+        tags_table.append({
+            "tagName": tag.name,
+            "createdBy": tag.labeler_login,
+            "tagId": str(tag.meta.sly_id)
+        })
+        tags_check[str(tag.meta.sly_id)] = True
+    fields.extend([
+        {"field": "data.tags", "payload": tags_table},
+        {"field": "state.tagCheck", "payload": tags_check},
+    ])
+
+
+@g.my_app.callback("copy_tags")
+@sly.timeit
+def copy_tags(api: sly.Api, task_id, context, state, app_logger):
+    selected_tags = state["tagCheck"]
+    project_id = context["projectId"]
+    image_id = context["imageId"]
+
+    user_id = context["userId"]
+    user_login = cache.get_user_login(user_id)
+
+    project_meta = cache.get_meta(project_id)
+    image_info = cache.get_image_info(image_id)
+    ann = cache.get_annotation(project_id, image_id)
+
+    res_tags = []
+    for tag in ann.img_tags:
+        sly_id = str(tag.meta.sly_id)
+        if sly_id in selected_tags and selected_tags[sly_id] is True:
+            new_tag = tag.clone()
+            new_tag.labeler_login = user_login
+            new_tag.updated_at = None
+            new_tag.created_at = None
+            res_tags.append(new_tag)
+
+    tag_names = list(set([i.name for i in res_tags]))
+    tag_metas = [project_meta.get_tag_meta(tag_name) for tag_name in tag_names]
+    for tag_meta in tag_metas:
+        _assign_tag_to_image(project_id, image_id, tag_meta)
+    cache.get_annotation(project_id, image_id, optimize=False)
+
+
+def _get_or_create_tag_meta(project_id, tag_meta):
+    project_meta = cache.get_meta(project_id)
+    project_tag_meta: sly.TagMeta = project_meta.get_tag_meta(tag_meta.name)
+    if project_tag_meta is None:
+        project_meta = project_meta.add_tag_meta(tag_meta)
+        cache.update_project_meta(project_id, project_meta)
+        project_meta = cache.get_meta(project_id)
+        project_tag_meta = project_meta.get_tag_meta(tag_meta.name)
+    return project_tag_meta
+
+
+def _assign_tag_to_image(project_id, image_id, tag_meta):
+    project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
+    g.api.image.add_tag(image_id, project_tag_meta.sly_id)
+
 
     #@TODO: wip
     # header x-job-id
