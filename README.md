@@ -19,12 +19,11 @@
 </div>
 
 # Overview
-
-Download images project in [Supervisely JSON format](https://docs.supervise.ly/data-organization/00_ann_format_navi). It is possible to download both images and annotations or only annotations.
+The application allows to review pre-marked images, choose the best markups and tags. Also, these markup and tags can be transferred to the original image for your own futher corrections.
 
 
 # How To Use
-**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there
+**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
 
 **Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
 
