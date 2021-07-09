@@ -30,7 +30,9 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 ***SubStep 2.1***: Press `+NEW` button at top right corner
 <img src="https://i.imgur.com/zyAQkYZ.png"/>
-***SubStep 2.2***:Set Labeling Job: 
+***SubStep 2.2***:Set recommended options for Project:
+<img src="https://i.imgur.com/zlWukS5.png"/>
+***SubStep 2.3***:Set Labeling Job: 
  - Title
  - Reviewer
  - Labelers
