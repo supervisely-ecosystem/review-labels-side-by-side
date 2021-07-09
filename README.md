@@ -1,12 +1,39 @@
-# review-labels-side-by-side
+<div align="center" markdown>
+<img src=""/>
 
-<el-tabs type="border-card" class="ml10">
-    <el-tab-pane label="Objects" style="height: 350px; overflow-y: auto">
-        {% include 'src/ui/objects.html' %}
-    </el-tab-pane>
-    <el-tab-pane label="Tags" style="height: 200px; overflow-y: auto">
-        {% include 'src/ui/tags.html' %}
-    </el-tab-pane>
-    <el-tab-pane label="Filters" style="height: 200px; overflow-y: auto">
-    </el-tab-pane>
-</el-tabs>
+# Review labels side by side
+
+<p align="center">
+  <a href="#Overview">Overview</a> •
+  <a href="#How-To-Use">How To Use</a>
+</p>
+
+
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/review-labels-side-by-side)
+[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
+![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/review-labels-side-by-side)
+[![views](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/review-labels-side-by-side&counter=views&label=views)](https://supervise.ly)
+[![used by teams](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/review-labels-side-by-side&counter=downloads&label=used%20by%20teams)](https://supervise.ly)
+[![runs](https://app.supervise.ly/public/api/v3/ecosystem.counters?repo=supervisely-ecosystem/review-labels-side-by-side&counter=runs&label=runs)](https://supervise.ly)
+
+</div>
+
+# Overview
+
+Download images project in [Supervisely JSON format](https://docs.supervise.ly/data-organization/00_ann_format_navi). It is possible to download both images and annotations or only annotations.
+
+
+# How To Use
+**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there
+
+**Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
+
+<img src="https://i.imgur.com/6JNfu3g.png" width="600px"/>
+
+**Step 3**: Define export settings in modal window
+
+<img src="https://i.imgur.com/jXSSOTW.png" width="600px">
+
+**Step 4**: Result archive will be available for download in `Tasks` list (image below) or from `Team Files` (path format is the following `Team Files`->`Export-to-Supervisely`->`<task_id>_<projectId>_<projectName>.tar`)
+
+<img src="https://i.imgur.com/QjFHRtx.png">
