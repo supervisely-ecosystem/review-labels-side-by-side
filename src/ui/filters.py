@@ -177,6 +177,10 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
 @g.my_app.callback("copy_objects")
 @sly.timeit
 def copy_objects(api: sly.Api, task_id, context, state, app_logger):
+    job_id = context.get("jobId", None)
+    if job_id is not None:
+        api.add_header('x-job-id', str(job_id))
+
     selected_objects = state["objCheck"]
     project_id = context["projectId"]
     image_id = context["imageId"]
@@ -202,8 +206,10 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
     new_ann = ann.add_labels(res_labels)
     cache.update_ann(project_id, image_id, new_ann)
 
+    if job_id is not None:
+        api.pop_header('x-job-id')
 
-# @TODO: refresh_tags_table, copy_tags
+
 def refresh_tags_table(context, userCheck, tagCheck, fields):
     project_id = context["projectId"]
     image_id = context["imageId"]
@@ -237,6 +243,10 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
 @g.my_app.callback("copy_tags")
 @sly.timeit
 def copy_tags(api: sly.Api, task_id, context, state, app_logger):
+    job_id = context.get("jobId", None)
+    if job_id is not None:
+        api.add_header('x-job-id', str(job_id))
+
     selected_tags = state["tagCheck"]
     project_id = context["projectId"]
     image_id = context["imageId"]
@@ -264,6 +274,9 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
         _assign_tag_to_image(project_id, image_id, tag_meta)
     cache.get_annotation(project_id, image_id, optimize=False)
 
+    if job_id is not None:
+        api.pop_header('x-job-id')
+
 
 def _get_or_create_tag_meta(project_id, tag_meta):
     project_meta = cache.get_meta(project_id)
@@ -279,9 +292,3 @@ def _get_or_create_tag_meta(project_id, tag_meta):
 def _assign_tag_to_image(project_id, image_id, tag_meta):
     project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
     g.api.image.add_tag(image_id, project_tag_meta.sly_id)
-
-
-    #@TODO: wip
-    # header x-job-id
-    #figures.bulk.add
-
