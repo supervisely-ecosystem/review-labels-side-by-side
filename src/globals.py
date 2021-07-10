@@ -5,6 +5,9 @@ from pathlib import Path
 my_app = sly.AppService()
 
 task_id = my_app.task_id
+owner_id = int(os.environ['context.userId'])
+owner_login = os.environ['context.userLogin']
+
 team_id = int(os.environ['context.teamId'])
 workspace_id = int(os.environ['context.workspaceId'])
 

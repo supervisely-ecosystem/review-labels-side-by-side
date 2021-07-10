@@ -32,7 +32,10 @@
         color: #20a0ff;
         }
     </sly-style>
-    <div class="fflex" style="align-items: flex-start;">
+    <div v-if="context.userId !== data.ownerId" style="color: red;">
+        You don't have permissions to open this application session. App is available for team member {{data.ownerLogin}} (id={{data.ownerId}})
+    </div>
+    <div v-else class="fflex" style="align-items: flex-start;">
         {% include 'src/ui/gallery.html' %}
         {% include 'src/ui/filters.html' %}
     </div>

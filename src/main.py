@@ -36,7 +36,6 @@ def main():
     g.my_app.compile_template(g.root_source_dir)
     g.my_app.run(data=data, state=state)
 
-#@TODO: show session only for ownerId
 #@TODO: v-if no objects or no tags
 #@TODO: add laodings
 #TODO: refresh ann cache after copy + refresh UI (hide user's annotations)
