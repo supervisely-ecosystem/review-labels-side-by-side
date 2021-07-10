@@ -1,6 +1,7 @@
 <div style="position: sticky; top: 0; flex: 1; min-width: 275px;">
     <sly-grid-gallery
             v-if="data.gallery"
+            :active-figure="state.active"
             :content="data.gallery.content"
             :options="data.gallery.options"
             class="ml5"
