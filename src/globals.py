@@ -7,12 +7,13 @@ my_app = sly.AppService()
 task_id = my_app.task_id
 team_id = int(os.environ['context.teamId'])
 workspace_id = int(os.environ['context.workspaceId'])
-project_id = int(os.environ['context.projectId'])
+
+#project_id = int(os.environ['context.projectId'])
 api = my_app.public_api
 users_info = api.user.get_team_members(team_id)
 
-meta_ = api.project.get_meta(project_id)
-meta = sly.ProjectMeta.from_json(meta_)
+#meta_ = api.project.get_meta(project_id)
+#meta = sly.ProjectMeta.from_json(meta_)
 
 root_source_dir = str(Path(sys.argv[0]).parents[1])
 sly.logger.info(f"Root source directory: {root_source_dir}")

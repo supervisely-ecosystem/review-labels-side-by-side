@@ -70,19 +70,3 @@ def get_user_login(user_id):
         user2login[user_id] = info.login
     login = user2login[user_id]
     return login
-
-
-def get_meta(project_id, optimize=True):
-    meta = None
-    if project_id not in project2meta or optimize is False:
-        meta_json = g.api.project.get_meta(project_id)
-        meta = sly.ProjectMeta.from_json(meta_json)
-        project2meta[project_id] = meta
-    else:
-        meta = project2meta[project_id]
-    return meta
-
-
-def update_project_meta(project_id, project_meta: sly.ProjectMeta):
-    g.api.project.update_meta(project_id, project_meta.to_json())
-    get_meta(project_id, optimize=False)
