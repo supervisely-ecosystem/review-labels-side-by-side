@@ -135,7 +135,7 @@
                 </tbody>
             </table>
         </sly-field>
-        <sly-field title="Filter by classes" v-if="data.classes">
+        <sly-field title="Filter by tags" v-if="data.classes">
             <div class="fflex">
                 <el-button type="text" size="mini"
                            @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
