@@ -2,18 +2,16 @@
   "name": "Review labels side-by-side",
   "type": "app",
   "categories": [
-    "report"
+    "labeling"
   ],
-  "description": "description",
-  "docker_image": "supervisely/base-py-sdk:6.1.85",
-  "main_script": "supervisely/src/main.py",
+  "description": "Filter objects and tags by user and copy correct labels to working area",
+  "docker_image": "supervisely/base-py-sdk:6.1.88",
+  "main_script": "src/main.py",
   "gui_template": "src/gui.html",
-  "task_location": "workspace_tasks",
+  "task_location": "application_sessions",
   "isolate": true,
-  "icon": "https://img.icons8.com/color/96/000000/attract-customers.png",
-  "icon_background": "#FFFFFF",
-  "context_menu": {
-    "target": ["images_project", "images_dataset"],
-    "context_root": "Report"
-  }
+  "headless": false,
+  "integrated_into": ["image_annotation_tool"],
+  "icon": "https://img.icons8.com/color/100/000000/rules-book.png",
+  "icon_background": "#FFFFFF"
 }
