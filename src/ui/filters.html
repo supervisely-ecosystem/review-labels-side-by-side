@@ -1,198 +1,174 @@
-<el-tabs type="card" style="margin-top: 10px;">
+<el-tabs style="margin-top: 10px;" type="border-card" style="width: 230px;" class="mr5">
     <el-tab-pane label="objects">
-        <div style="width: 250px;" class="ml10 mr10 mb15">
-            <sly-style>
-                #sly-grid-gallery-active-figure-example .figures-list {
-                width: 300px;
-                margin-left: 15px;
-                }
-
-                #sly-grid-gallery-active-figure-example ul {
-                list-style: none;
-                padding-left: 0;
-                }
-
-                #sly-grid-gallery-active-figure-example li {
-                cursor: pointer;
-                line-height: 20px;
-                }
-
-                #sly-grid-gallery-active-figure-example li:hover {
-                color: #20a0ff;
-                }
-            </sly-style>
-            <sly-field title="Filter by users" v-if="data.users">
-                <div class="fflex">
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
-                        <i class="zmdi zmdi-check-all mr5"></i>Select all
-                    </el-button>
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
-                        <i class="zmdi zmdi-square-o mr5"></i>Deselect all
-                    </el-button>
-                </div>
-                <table class="beautiful-table al" style="width: 100%;">
-                    <thead>
-                    <th>User</th>
-                    <th>Objects count</th>
-                    </thead>
-                    <tbody>
-                    <tr v-for="user in data.users">
-                        <td>
-                            <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}
-                            </el-checkbox>
-                        </td>
-                        <td>{{user.count}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </sly-field>
-            <sly-field title="Filter by classes" v-if="data.classes">
-                <div class="fflex">
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
-                        <i class="zmdi zmdi-check-all mr5"></i>Select all
-                    </el-button>
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
-                        <i class="zmdi zmdi-square-o mr5"></i>Deselect all
-                    </el-button>
-                </div>
-                <table class="beautiful-table al" style="width: 100%;">
-                    <thead>
-                    <th>Class</th>
-                    <th>Objects count</th>
-                    </thead>
-                    <tbody>
-                    <tr v-for="objClass in data.classes">
-                        <td>
-                            <el-checkbox class="small" v-model="state.classCheck[objClass.name]">{{objClass.name}}
-                            </el-checkbox>
-                        </td>
-                        <td>{{objClass.count}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </sly-field>
-            <el-button v-if="data.classes" class="regular" size="small"
-                       type="primary" @click="command('filter')">
-                Filter
-            </el-button>
-            <sly-field title="Filtered objects" v-if="data.objects">
-                <div class="fflex">
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.objCheck).forEach(v => state.objCheck[v] = true)">
-                        <i class="zmdi zmdi-check-all mr5"></i>Select all
-                    </el-button>
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.objCheck).forEach(v => state.objCheck[v] = false)">
-                        <i class="zmdi zmdi-square-o mr5"></i>Deselect all
-                    </el-button>
-                </div>
-                <table class="beautiful-table al" style="width: 100%;">
-                    <thead>
-                    <th>Class</th>
-                    <th>Shape</th>
-                    <th>Created By</th>
-                    </thead>
-                    <tbody>
-                    <tr v-for="obj in data.objects">
-                        <td v-for="f in state.firstState.content.annotations.ann1.figures"
-                            v-if="f.id==obj.objId"
-                            :style="[state.active === f.id ? 'backgroundColor: red; color: white' : '' ]"
-                            @mouseenter="state.active = f.id"
-                            @mouseleave="state.active = null"
-                        >
-                            <el-checkbox class="small" v-model="state.objCheck[obj.objId]">
-                                {{obj.objClass}}
-                            </el-checkbox>
-                        </td>
-                        <td>{{obj.shape}}</td>
-                        <td>{{obj.createdBy}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </sly-field>
-            <el-button v-if="data.objects"
-                       class="regular" size="small"
-                       type="primary"
-                       @click="command('show_selected_objects')">
-                Show selected objects
-            </el-button>
-            <el-button v-if="data.objects"
-                       style="margin-left: 0px; margin-top: 10px;"
-                       class="regular" size="small"
-                       type="success"
-                       @click="command('copy_objects')">
-                Copy selected objects <i class="zmdi zmdi-arrow-right ml5"></i>
-            </el-button>
-        </div>
+        <sly-field title="Filter by users" v-if="data.users">
+            <div class="fflex">
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
+                    <i class="zmdi zmdi-check-all mr5"></i>Select all
+                </el-button>
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
+                    <i class="zmdi zmdi-square-o mr5"></i>Deselect all
+                </el-button>
+            </div>
+            <table class="beautiful-table al" style="width: 100%;">
+                <thead>
+                <th>User</th>
+                <th>Count</th>
+                </thead>
+                <tbody>
+                <tr v-for="user in data.users">
+                    <td>
+                        <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}
+                        </el-checkbox>
+                    </td>
+                    <td>{{user.count}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </sly-field>
+        <sly-field title="Filter by classes" v-if="data.classes">
+            <div class="fflex">
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
+                    <i class="zmdi zmdi-check-all mr5"></i>Select all
+                </el-button>
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
+                    <i class="zmdi zmdi-square-o mr5"></i>Deselect all
+                </el-button>
+            </div>
+            <table class="beautiful-table al" style="width: 100%;">
+                <thead>
+                <th>Class</th>
+                <th>Count</th>
+                </thead>
+                <tbody>
+                <tr v-for="objClass in data.classes">
+                    <td>
+                        <el-checkbox class="small" v-model="state.classCheck[objClass.name]">{{objClass.name}}
+                        </el-checkbox>
+                    </td>
+                    <td>{{objClass.count}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </sly-field>
+        <el-button v-if="data.classes" class="regular" size="small"
+                   type="primary" @click="command('filter')">
+            Filter
+        </el-button>
+        <sly-field title="Filtered objects" v-if="data.objects">
+            <div class="fflex">
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.objCheck).forEach(v => state.objCheck[v] = true)">
+                    <i class="zmdi zmdi-check-all mr5"></i>Select all
+                </el-button>
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.objCheck).forEach(v => state.objCheck[v] = false)">
+                    <i class="zmdi zmdi-square-o mr5"></i>Deselect all
+                </el-button>
+            </div>
+            <table class="beautiful-table al" style="width: 100%;">
+                <thead>
+                <th>Class</th>
+                <!--                    <th>Shape</th>-->
+                <th>Created By</th>
+                </thead>
+                <tbody>
+                <tr v-for="obj in data.objects">
+                    <td v-for="f in state.firstState.content.annotations.ann1.figures"
+                        v-if="f.id==obj.objId"
+                        :style="[state.active === f.id ? 'backgroundColor: red; color: white' : '' ]"
+                        @mouseenter="state.active = f.id"
+                        @mouseleave="state.active = null"
+                    >
+                        <el-checkbox class="small" v-model="state.objCheck[obj.objId]">
+                            {{obj.objClass}}
+                        </el-checkbox>
+                    </td>
+                    <!--                        <td>{{obj.shape}}</td>-->
+                    <td>{{obj.createdBy}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </sly-field>
+        <el-button v-if="data.objects"
+                   class="regular" size="small"
+                   type="primary"
+                   @click="command('show_selected_objects')">
+            Show selected objects
+        </el-button>
+        <el-button v-if="data.objects"
+                   style="margin-left: 0px; margin-top: 10px;"
+                   class="regular" size="small"
+                   type="success"
+                   @click="command('copy_objects')">
+            Copy selected objects <i class="zmdi zmdi-arrow-right ml5"></i>
+        </el-button>
     </el-tab-pane>
     <el-tab-pane label="tags">
-        <div style="width: 250px;" class="ml10 mr10 mb15">
-            <sly-field title="Filter by users" v-if="data.users">
-                <div class="fflex">
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
-                        <i class="zmdi zmdi-check-all mr5"></i>Select all
-                    </el-button>
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
-                        <i class="zmdi zmdi-square-o mr5"></i>Deselect all
-                    </el-button>
-                </div>
-                <table class="beautiful-table al" style="width: 100%;">
-                    <thead>
-                    <th>User</th>
-                    <th>Objects count</th>
-                    </thead>
-                    <tbody>
-                    <tr v-for="user in data.users">
-                        <td>
-                            <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}
-                            </el-checkbox>
-                        </td>
-                        <td>{{user.count}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </sly-field>
-            <sly-field title="Filter by classes" v-if="data.classes">
-                <div class="fflex">
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
-                        <i class="zmdi zmdi-check-all mr5"></i>Select all
-                    </el-button>
-                    <el-button type="text" size="mini"
-                               @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
-                        <i class="zmdi zmdi-square-o mr5"></i>Deselect all
-                    </el-button>
-                </div>
-                <table class="beautiful-table al" style="width: 100%;">
-                    <thead>
-                    <th>Class</th>
-                    <th>Objects count</th>
-                    </thead>
-                    <tbody>
-                    <tr v-for="objClass in data.classes">
-                        <td>
-                            <el-checkbox class="small" v-model="state.classCheck[objClass.name]">{{objClass.name}}
-                            </el-checkbox>
-                        </td>
-                        <td>{{objClass.count}}</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </sly-field>
-            <el-button
-                    v-if="data.classes"
-                    class="regular" size="small"
-                    type="primary"
-                    @click="command('filter')">
-                Filter
-            </el-button>
-        </div>
+        <sly-field title="Filter by users" v-if="data.users">
+            <div class="fflex">
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
+                    <i class="zmdi zmdi-check-all mr5"></i>Select all
+                </el-button>
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
+                    <i class="zmdi zmdi-square-o mr5"></i>Deselect all
+                </el-button>
+            </div>
+            <table class="beautiful-table al" style="width: 100%;">
+                <thead>
+                <th>User</th>
+                <th>Count</th>
+                </thead>
+                <tbody>
+                <tr v-for="user in data.users">
+                    <td>
+                        <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}
+                        </el-checkbox>
+                    </td>
+                    <td>{{user.count}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </sly-field>
+        <sly-field title="Filter by classes" v-if="data.classes">
+            <div class="fflex">
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
+                    <i class="zmdi zmdi-check-all mr5"></i>Select all
+                </el-button>
+                <el-button type="text" size="mini"
+                           @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
+                    <i class="zmdi zmdi-square-o mr5"></i>Deselect all
+                </el-button>
+            </div>
+            <table class="beautiful-table al" style="width: 100%;">
+                <thead>
+                <th>Tag</th>
+                <th>Count</th>
+                </thead>
+                <tbody>
+                <tr v-for="objClass in data.classes">
+                    <td>
+                        <el-checkbox class="small" v-model="state.classCheck[objClass.name]">{{objClass.name}}
+                        </el-checkbox>
+                    </td>
+                    <td>{{objClass.count}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </sly-field>
+        <el-button
+                v-if="data.classes"
+                class="regular" size="small"
+                type="primary"
+                @click="command('filter')">
+            Filter
+        </el-button>
         <sly-field title="Filtered tags" v-if="data.tags">
             <div class="fflex">
                 <el-button type="text" size="mini"

@@ -12,6 +12,26 @@
         text-align: left;
         }
     </sly-style>
+    <sly-style>
+        #sly-grid-gallery-active-figure-example .figures-list {
+        width: 300px;
+        margin-left: 15px;
+        }
+
+        #sly-grid-gallery-active-figure-example ul {
+        list-style: none;
+        padding-left: 0;
+        }
+
+        #sly-grid-gallery-active-figure-example li {
+        cursor: pointer;
+        line-height: 20px;
+        }
+
+        #sly-grid-gallery-active-figure-example li:hover {
+        color: #20a0ff;
+        }
+    </sly-style>
     <div class="fflex" style="align-items: flex-start;">
         {% include 'src/ui/gallery.html' %}
         {% include 'src/ui/filters.html' %}
