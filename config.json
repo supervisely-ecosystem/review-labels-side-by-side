@@ -4,7 +4,7 @@
   "categories": [
     "labeling"
   ],
-  "description": "Filter objects and tags by user and copy correct labels to working area",
+  "description": "Filter objects and tags by user and copy them to working area",
   "docker_image": "supervisely/base-py-sdk:6.1.88",
   "main_script": "src/main.py",
   "gui_template": "src/gui.html",
