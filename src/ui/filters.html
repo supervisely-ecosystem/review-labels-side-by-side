@@ -135,7 +135,7 @@
                 </tbody>
             </table>
         </sly-field>
-        <sly-field title="Filter by tags" v-if="data.tagsCount">
+        <sly-field title="Filter by tags" v-if="data.tags">
             <div class="fflex">
                 <el-button type="text" size="mini"
                            @click="Object.keys(state.tagCheck).forEach(v => state.tagCheck[v] = true)">
@@ -152,7 +152,7 @@
                 <th>Count</th>
                 </thead>
                 <tbody>
-                <tr v-for="tag in data.tagsCount">
+                <tr v-for="tag in data.tags">
                     <td>
                         <el-checkbox class="small" v-model="state.tagCheck[tag.name]">{{tag.name}}
                         </el-checkbox>
@@ -163,7 +163,7 @@
             </table>
         </sly-field>
         <el-button
-                v-if="data.tagsCount"
+                v-if="data.tags"
                 class="regular" size="small"
                 type="primary"
                 @click="command('filter')">
@@ -172,11 +172,11 @@
         <sly-field title="Filtered tags" v-if="data.tagsTable">
             <div class="fflex">
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.tagCheck).forEach(v => state.tagCheck[v] = true)">
+                           @click="Object.keys(state.tagsTableCheck).forEach(v => state.tagsTableCheck[v] = true)">
                     <i class="zmdi zmdi-check-all mr5"></i>Select all
                 </el-button>
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.tagCheck).forEach(v => state.tagCheck[v] = false)">
+                           @click="Object.keys(state.tagsTableCheck).forEach(v => state.tagsTableCheck[v] = false)">
                     <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                 </el-button>
             </div>
@@ -184,12 +184,12 @@
                 <thead>
                 <th>Tag</th>
                 <th>Created By</th>
+                <th>ID</th>
                 </thead>
                 <tbody>
                 <tr v-for="tag in data.tagsTable">
                     <td>
-<!--                        .tagName-->
-                        <el-checkbox class="small" v-model="state.tagCheck[tag.tagName] && state.userCheck.tags[tag.createdBy]">{{tag.tagName}}</el-checkbox>
+                        <el-checkbox class="small" v-model="state.tagsTableCheck[tag.tagId]">{{tag.tagName}} {{tag.Value}}</el-checkbox>
                     </td>
                     <td>{{tag.createdBy}}</td>
                     <td>{{tag.tagId}}</td>

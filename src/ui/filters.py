@@ -9,19 +9,18 @@ import cache
 def init(data, state):
     data["users"] = None  # {}
     state["userCheck"] = None  #{}
-    # for key in ["objects", "tags"]:
-    #     data["users"][key] = None
-    #     state["userCheck"][key] = None
 
     data["classes"] = None
     state["classCheck"] = None
 
+    data["tags"] = None
+    state["tagCheck"] = None
+
     data["objects"] = None
     state["objCheck"] = None
 
-    data["tagsCount"] = None
-    data["tagsTable"] = None
-    state["tagCheck"] = None
+    data["tagTable"] = None
+    state["tagTableCheck"] = None
 
     state['firstState'] = None
 
@@ -77,18 +76,17 @@ def get_tags(context, ann: sly.Annotation):
     user_login = cache.get_user_login(user_id)
 
     tags = defaultdict(int)
-    tagName2slyId = dict()
+
     for tag in ann.img_tags:
         if tag.labeler_login == user_login:
             continue
         tags[tag.name] += 1
-        tagName2slyId[tag.name] = tag.meta.sly_id
+
     res = []
     for name, count in tags.items():
         res.append({
             "name": name,
             "count": count,
-            "tagId": tagName2slyId[name]
         })
     return res
 
@@ -111,10 +109,13 @@ def refresh(context, users, classes, tags, first_state=None):
     fields = [
         {"field": "data.users", "payload": users},
         {"field": "state.userCheck", "payload": userCheck},
+
         {"field": "data.classes", "payload": classes},
         {"field": "state.classCheck", "payload": classCheck},
-        {"field": "data.tagsCount", "payload": tags},
+
+        {"field": "data.tags", "payload": tags},
         {"field": "state.tagCheck", "payload": tagCheck},
+
         {"field": "state.firstState", "payload": first_state},
         # {"field": "data.objects", "payload": None},
         # {"field": "state.objCheck", "payload": None},
@@ -178,25 +179,26 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
         # if userCheck.get(login, False) is True and tagCheck[tag_name] is True:
         #     res_tags.append(tag)
         try:
-            if userCheck['tags'].get(login, False) is True and tagCheck[tag_name] is True:  # tag_name str(tag.meta.sly_id)
+            if userCheck['tags'].get(login, False) is True and tagCheck[tag_name] is True:
                 res_tags.append(tag)
         except:
             if userCheck.get(login, False) is True and tagCheck[tag_name] is True:
                 res_tags.append(tag)
 
     tags_table = []
-    tags_check = {i: False for i in tagCheck}  # {}
+    tags_check = {}  # {}
     for tag in res_tags:
         tags_table.append({
             "tagName": tag.name,
+            "tagValue": tag.value if tag.value else '-',
             "createdBy": tag.labeler_login,
-            "tagId": str(tag.meta.sly_id)
+            "tagId": str(tag.sly_id)
         })
-        tags_check[tag.name] = True  # str(tag.meta.sly_id)
+        tags_check[str(tag.sly_id)] = True
 
     fields.extend([
         {"field": "data.tagsTable", "payload": tags_table},
-        {"field": "state.tagCheck", "payload": tags_check},
+        {"field": "state.tagsTableCheck", "payload": tags_check},
     ])
 
 
@@ -264,7 +266,7 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
     if job_id is not None:
         api.add_header('x-job-id', str(job_id))
 
-    selected_tags = state["tagCheck"]
+    selected_tags = state["tagsTableCheck"]
     project_id = context["projectId"]
     image_id = context["imageId"]
 
@@ -277,13 +279,13 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
 
     res_tags = []
     for tag in ann.img_tags:
-        # sly_id = str(tag.meta.sly_id)
-        sly_id = tag.name
+        sly_id = str(tag.sly_id)
+        # sly_id = tag.name
         if sly_id in selected_tags and selected_tags[sly_id] is True:
             new_tag = tag.clone()
-            new_tag.labeler_login = user_login
-            new_tag.updated_at = None
-            new_tag.created_at = None
+            # new_tag.labeler_login = user_login
+            # new_tag.updated_at = None
+            # new_tag.created_at = None
             res_tags.append(new_tag)
 
     tag_names = list(set([i.name for i in res_tags]))
