@@ -25,6 +25,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 # How To Start
 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
+    Select `Ecosystem` in Main Menu -> `Transform` in Content -> `Resize images`
 
 <img src="https://i.imgur.com/tl60QE4.png"/>
 
