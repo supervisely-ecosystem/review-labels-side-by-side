@@ -7,6 +7,7 @@
   <a href="#Overview">Overview</a>
   <a href="#How-To-Start">Overview</a>
   <a href="#How-To-Use">How To Use</a>
+  <a href="#Extra-options">How To Use</a>
 </p>
 
 
@@ -55,21 +56,22 @@ For `Tags`:
 
 <img src="https://i.imgur.com/ohkTWR6.png"/>
 
-**Step 3**: Define export settings in modal window
+**Step 2**: Select target users, classes, tags and copy them to annotation area(right section). 
+   Select enabl/disable intrested checkboxes for each section. For `objects` tab you can preview each object in a gallery. 
+   To copy objects and tags press `Copy selected objects` for objects and `Copy selected tags` for tags respectively. 
+   Corresponding data will appear at annotation area a few moments later.
 
 <img src="" width="600px">
 
-**Step 4**:
+# Extra options
 
-<img src="">
-
-**SubStep **:Set recommended options for target Project:
+**Step 1**:Set recommended options for target Project:
 <img src="https://i.imgur.com/zlWukS5.png"/>
 
-**SubStep **: Press `+NEW` button at top right corner
+**Step 2**: Press `+NEW` button at top right corner
 <img src="https://i.imgur.com/zyAQkYZ.png"/>
 
-**SubStep **: Create Labeling Job: set following options
+**Step 3**: Create Labeling Job: set following options
  - Title
  - Reviewer(s)
  - Labeler(s)
