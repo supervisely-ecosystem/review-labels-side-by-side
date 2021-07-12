@@ -70,7 +70,7 @@ For `Tags`:
 
 **Step 1**:Set recommended options for target Project:
 
-<img src="https://i.imgur.com/zlWukS5.png" height="600px"/>
+<img src="https://i.imgur.com/zlWukS5.png" height="1000px"/>
 
 **Step 2**: Press `+NEW` button at top right corner
 
