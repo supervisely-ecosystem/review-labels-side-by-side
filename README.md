@@ -26,7 +26,10 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
     
-   Select `Ecosystem` in Main Menue(1) -> put `Review labels side-by-side` in the search bar(2), open app page by clicking on it(3), add app to your team by pressing `Get` button(4)
+   - Select `Ecosystem` in Main Menue(1) -> 
+   - put `Review labels side-by-side` in the search bar(2), 
+   - open app page by clicking on it(3), 
+   - add app to your team by pressing `Get` button(4)
 
 <img src="https://i.imgur.com/tl60QE4.png"/>
 
