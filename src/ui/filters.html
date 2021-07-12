@@ -3,11 +3,11 @@
         <sly-field title="Filter by users" v-if="data.users">
             <div class="fflex">
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
+                           @click="Object.keys(state.userCheck.objects).forEach(v => state.userCheck.objects[v] = true)">
                     <i class="zmdi zmdi-check-all mr5"></i>Select all
                 </el-button>
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
+                           @click="Object.keys(state.userCheck.objects).forEach(v => state.userCheck.objects[v] = false)">
                     <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                 </el-button>
             </div>
@@ -17,9 +17,9 @@
                 <th>Count</th>
                 </thead>
                 <tbody>
-                <tr v-for="user in data.users">
+                <tr v-for="user in data.users.objects">
                     <td>
-                        <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}
+                        <el-checkbox class="small" v-model="state.userCheck.objects[user.login]">{{user.login}}
                         </el-checkbox>
                     </td>
                     <td>{{user.count}}</td>
@@ -111,11 +111,11 @@
         <sly-field title="Filter by users" v-if="data.users">
             <div class="fflex">
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = true)">
+                           @click="Object.keys(state.userCheck.tags).forEach(v => state.userCheck.tags[v] = true)">
                     <i class="zmdi zmdi-check-all mr5"></i>Select all
                 </el-button>
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.userCheck).forEach(v => state.userCheck[v] = false)">
+                           @click="Object.keys(state.userCheck.tags).forEach(v => state.userCheck.tags[v] = false)">
                     <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                 </el-button>
             </div>
@@ -125,9 +125,9 @@
                 <th>Count</th>
                 </thead>
                 <tbody>
-                <tr v-for="user in data.users">
+                <tr v-for="user in data.users.tags">
                     <td>
-                        <el-checkbox class="small" v-model="state.userCheck[user.login]">{{user.login}}
+                        <el-checkbox class="small" v-model="state.userCheck.tags[user.login]">{{user.login}}
                         </el-checkbox>
                     </td>
                     <td>{{user.count}}</td>
@@ -135,14 +135,14 @@
                 </tbody>
             </table>
         </sly-field>
-        <sly-field title="Filter by tags" v-if="data.classes">
+        <sly-field title="Filter by tags" v-if="data.tagsCount">
             <div class="fflex">
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = true)">
+                           @click="Object.keys(state.tagCheck).forEach(v => state.tagCheck[v] = true)">
                     <i class="zmdi zmdi-check-all mr5"></i>Select all
                 </el-button>
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.classCheck).forEach(v => state.classCheck[v] = false)">
+                           @click="Object.keys(state.tagCheck).forEach(v => state.tagCheck[v] = false)">
                     <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                 </el-button>
             </div>
@@ -152,24 +152,24 @@
                 <th>Count</th>
                 </thead>
                 <tbody>
-                <tr v-for="objClass in data.classes">
+                <tr v-for="tag in data.tagsCount">
                     <td>
-                        <el-checkbox class="small" v-model="state.classCheck[objClass.name]">{{objClass.name}}
+                        <el-checkbox class="small" v-model="state.tagCheck[tag.name]">{{tag.name}}
                         </el-checkbox>
                     </td>
-                    <td>{{objClass.count}}</td>
+                    <td>{{tag.count}}</td>
                 </tr>
                 </tbody>
             </table>
         </sly-field>
         <el-button
-                v-if="data.classes"
+                v-if="data.tagsCount"
                 class="regular" size="small"
                 type="primary"
                 @click="command('filter')">
             Filter
         </el-button>
-        <sly-field title="Filtered tags" v-if="data.tags">
+        <sly-field title="Filtered tags" v-if="data.tagsTable">
             <div class="fflex">
                 <el-button type="text" size="mini"
                            @click="Object.keys(state.tagCheck).forEach(v => state.tagCheck[v] = true)">
@@ -186,9 +186,10 @@
                 <th>Created By</th>
                 </thead>
                 <tbody>
-                <tr v-for="tag in data.tags">
+                <tr v-for="tag in data.tagsTable">
                     <td>
-                        <el-checkbox class="small" v-model="state.tagCheck[tag.tagId]">{{tag.tagName}}</el-checkbox>
+<!--                        .tagName-->
+                        <el-checkbox class="small" v-model="state.tagCheck[tag.tagName]">{{tag.tagName}}</el-checkbox>
                     </td>
                     <td>{{tag.createdBy}}</td>
                     <td>{{tag.tagId}}</td>
@@ -196,7 +197,7 @@
                 </tbody>
             </table>
         </sly-field>
-        <el-button v-if="data.tags"
+        <el-button v-if="data.tagsTable"
                    style="margin-left: 0px; margin-top: 10px;"
                    class="regular" size="small"
                    type="success"
