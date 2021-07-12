@@ -53,16 +53,16 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 **Step 1**: Open newly created Labeling job
 
-<img src="https://i.imgur.com/DTuJq4X.png"/>
+<img src=""/>
 
 **Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
 
-<img src="https://i.imgur.com/6JNfu3g.png" width="600px"/>
+<img src="" width="600px"/>
 
 **Step 3**: Define export settings in modal window
 
-<img src="https://i.imgur.com/jXSSOTW.png" width="600px">
+<img src="" width="600px">
 
-**Step 4**: Result archive will be available for download in `Tasks` list (image below) or from `Team Files` (path format is the following `Team Files`->`Export-to-Supervisely`->`<task_id>_<projectId>_<projectName>.tar`)
+**Step 4**:
 
-<img src="https://i.imgur.com/QjFHRtx.png">
+<img src="">
