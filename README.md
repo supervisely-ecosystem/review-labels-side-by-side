@@ -36,7 +36,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 **Step 1**: Open newly created Labeling job
 
-<img src=""/>
+<img src="https://i.imgur.com/r7Kj8mF.png"/>
 
 **Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
 
