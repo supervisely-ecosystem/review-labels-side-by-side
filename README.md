@@ -33,7 +33,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 <img src="https://i.imgur.com/tl60QE4.png"/>
 
-**Step 2**: Create new Labeling job: [Labeling as Scale](https://ecosystem.supervise.ly/labeling/jobs/list)
+**Step 2**: Create new Labeling job [Labeling as Scale](https://ecosystem.supervise.ly/labeling/jobs/list) and run it. Look for project's extra options below.
 
 <img src="https://i.imgur.com/simXGmk.png"/>
 
