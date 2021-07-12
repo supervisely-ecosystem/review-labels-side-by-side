@@ -28,27 +28,6 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 **Step 2**: Create new Labeling job: [Labeling as Scale](https://ecosystem.supervise.ly/labeling/jobs/list)
 
-***SubStep 2.1***:Set recommended options for target Project:
-<img src="https://i.imgur.com/zlWukS5.png"/>
-
-***SubStep 2.2***: Press `+NEW` button at top right corner
-<img src="https://i.imgur.com/zyAQkYZ.png"/>
-
-***SubStep 2.3***: Create Labeling Job: set following options
- - Title
- - Reviewer(s)
- - Labeler(s)
- - Data to Annotate: 
-   - Workspace
-   - Project(s)
-   - Dataset(s)
- - Annotation Settings:
-   - Class(es)
-   - Tag(s) 
-   - Labeler sees figures(recommended: Only own)
-   - Labeler sees tags(recommended: Only own))
- - Images Filtering (...)
-
 # How To Use
 
 **Step 1**: Open newly created Labeling job
@@ -66,3 +45,24 @@ Application allows to review pre-marked by annotators image projects, choose the
 **Step 4**:
 
 <img src="">
+
+**SubStep **:Set recommended options for target Project:
+<img src="https://i.imgur.com/zlWukS5.png"/>
+
+**SubStep **: Press `+NEW` button at top right corner
+<img src="https://i.imgur.com/zyAQkYZ.png"/>
+
+**SubStep **: Create Labeling Job: set following options
+ - Title
+ - Reviewer(s)
+ - Labeler(s)
+ - Data to Annotate: 
+   - Workspace
+   - Project(s)
+   - Dataset(s)
+ - Annotation Settings:
+   - Class(es)
+   - Tag(s) 
+   - Labeler sees figures(recommended: Only own)
+   - Labeler sees tags(recommended: Only own))
+ - Images Filtering (...)
