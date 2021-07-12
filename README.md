@@ -26,7 +26,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
 
-<img src="https://i.imgur.com/xAUHqrA.png"/>
+<img src="https://i.imgur.com/tl60QE4.png"/>
 
 **Step 2**: Create new Labeling job: [Labeling as Scale](https://ecosystem.supervise.ly/labeling/jobs/list)
 
