@@ -43,7 +43,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 <img src="https://i.imgur.com/d5PHeMZ.png"/>
 
-    **Note**: You can replace `Apps` area to the left/right by managing Panel settings(step 3 on the picture)
+   **Note**: You can replace `Apps` area to the left/right by managing `Panel settings` (step 3 on the picture)
 
 **Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
 
