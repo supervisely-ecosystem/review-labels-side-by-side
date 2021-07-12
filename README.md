@@ -37,17 +37,21 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 <img src="https://i.imgur.com/simXGmk.png"/>
 
-# How To Use
-
-**Step 1**: Open newly created Labeling job -> Run app by clicking `Run` button. Open it. 
+**Step 3**: Open newly created Labeling job -> Run app by clicking `Run` button. Open it. 
 
 <img src="https://i.imgur.com/d5PHeMZ.png"/>
 
    **Note**: You can replace `Apps` area to the left/right by managing `Panel settings` (step 3 on the picture)
 
-**Step 2**: Open context menu of images project -> `Run App` -> `Download via app` -> `Export to Supervisely format` 
+# How To Use
 
-<img src="" width="600px"/>
+**Step 1**: In opened window there are 2 avalible tabs: `Objects` and `Tags`. Each tab consists of 3 sections: 
+For Objects:
+ - `Filtered Users`, `Filtered classes` and `Filtered objects` 
+For `Tags`:
+ - `Filtered users`, `Filtered tags` and `Filtered tags by users`
+
+<img src="https://i.imgur.com/ohkTWR6.png"/>
 
 **Step 3**: Define export settings in modal window
 
