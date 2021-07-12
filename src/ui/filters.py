@@ -197,8 +197,8 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
         tags_check[str(tag.sly_id)] = True
 
     fields.extend([
-        {"field": "data.tagsTable", "payload": tags_table},
-        {"field": "state.tagsTableCheck", "payload": tags_check},
+        {"field": "data.tagTable", "payload": tags_table},
+        {"field": "state.tagTableCheck", "payload": tags_check},
     ])
 
 

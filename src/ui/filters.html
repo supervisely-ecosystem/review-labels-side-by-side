@@ -169,30 +169,30 @@
                 @click="command('filter')">
             Filter
         </el-button>
-        <sly-field title="Filtered tags" v-if="data.tagsTable">
+        <sly-field title="Filtered tags" v-if="data.tagTable">
             <div class="fflex">
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.tagsTableCheck).forEach(v => state.tagsTableCheck[v] = true)">
+                           @click="Object.keys(state.tagTableCheck).forEach(v => state.tagTableCheck[v] = true)">
                     <i class="zmdi zmdi-check-all mr5"></i>Select all
                 </el-button>
                 <el-button type="text" size="mini"
-                           @click="Object.keys(state.tagsTableCheck).forEach(v => state.tagsTableCheck[v] = false)">
+                           @click="Object.keys(state.tagTableCheck).forEach(v => state.tagTableCheck[v] = false)">
                     <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                 </el-button>
             </div>
             <table class="beautiful-table al" style="width: 100%;">
                 <thead>
                 <th>Tag</th>
+                <th>Value</th>
                 <th>Created By</th>
-                <th>ID</th>
                 </thead>
                 <tbody>
-                <tr v-for="tag in data.tagsTable">
+                <tr v-for="tag in data.tagTable">
                     <td>
-                        <el-checkbox class="small" v-model="state.tagsTableCheck[tag.tagId]">{{tag.tagName}} {{tag.Value}}</el-checkbox>
+                        <el-checkbox class="small" v-model="state.tagTableCheck[tag.tagId]">{{tag.tagName}}</el-checkbox>
                     </td>
+                    <td>{{tag.tagValue}}</td>
                     <td>{{tag.createdBy}}</td>
-                    <td>{{tag.tagId}}</td>
                 </tr>
                 </tbody>
             </table>
