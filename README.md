@@ -58,13 +58,13 @@ For `Tags`:
 
 **Step 2**: Select target users, classes, tags and copy them to annotation area(right section). 
    
-   Select enabl/disable target checkboxes for each section. Press `Filter` to preview results. Also, for `objects` tab, you can preview each object in a gallery. 
-   
-   To copy objects and tags press `Copy selected objects` for objects and `Copy selected tags` for tags respectively. 
+ - Select enabl/disable target checkboxes for each section. 
+ - Press `Filter` to preview results. Also, for `objects` tab, you can preview each object in a gallery.    
+ - To copy objects and tags press `Copy selected objects` for objects and `Copy selected tags` for tags respectively. 
    
    Corresponding data will appear at annotation area a few moments later.
 
-<img src="https://i.imgur.com/v2gv9a5.png">
+<img src="https://i.imgur.com/IwYpP4c.png">
 
 # Extra options
 
