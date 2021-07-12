@@ -72,21 +72,17 @@ For `Tags`:
 
 <img src="https://i.imgur.com/zlWukS5.png" height="1000px"/>
 
-**Step 2**: Press `+NEW` button at top right corner
-
-<img src="https://i.imgur.com/zyAQkYZ.png"/>
-
-**Step 3**: Create Labeling Job: set following options
+**Step 2**: Create Labeling Job: set following options
  - Title
  - Reviewer(s)
  - Labeler(s)
  - Data to Annotate: 
-   - Workspace
-   - Project(s)
-   - Dataset(s)
+   - Required Workspace
+   - Required Project(s)
+   - Required Dataset(s)
  - Annotation Settings:
-   - Class(es)
-   - Tag(s) 
+   - Required Class(es)
+   - Required Tag(s) 
    - Labeler sees figures(recommended: Only own)
    - Labeler sees tags(recommended: Only own))
- - Images Filtering (...)
+ - Images Filtering options
