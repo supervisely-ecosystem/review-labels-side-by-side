@@ -64,7 +64,7 @@ For `Tags`:
    
    Corresponding data will appear at annotation area a few moments later.
 
-<img src="" width="600px">
+<img src="https://i.imgur.com/v2gv9a5.png">
 
 # Extra options
 
