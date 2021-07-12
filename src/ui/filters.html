@@ -189,7 +189,7 @@
                 <tr v-for="tag in data.tagsTable">
                     <td>
 <!--                        .tagName-->
-                        <el-checkbox class="small" v-model="state.tagCheck[tag.tagName]">{{tag.tagName}}</el-checkbox>
+                        <el-checkbox class="small" v-model="state.tagCheck[tag.tagName] && state.userCheck.tags[tag.createdBy]">{{tag.tagName}}</el-checkbox>
                     </td>
                     <td>{{tag.createdBy}}</td>
                     <td>{{tag.tagId}}</td>

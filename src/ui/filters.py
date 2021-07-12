@@ -93,22 +93,6 @@ def get_tags(context, ann: sly.Annotation):
     return res
 
 
-def _get_or_create_tag_meta(project_id, tag_meta):
-    project_meta = cache.get_meta(project_id)
-    project_tag_meta: sly.TagMeta = project_meta.get_tag_meta(tag_meta.name)
-    if project_tag_meta is None:
-        project_meta = project_meta.add_tag_meta(tag_meta)
-        cache.update_project_meta(project_id, project_meta)
-        project_meta = cache.get_meta(project_id)
-        project_tag_meta = project_meta.get_tag_meta(tag_meta.name)
-    return project_tag_meta
-
-
-def _assign_tag_to_image(project_id, image_id, tag_meta):
-    project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
-    g.api.image.add_tag(image_id, project_tag_meta.sly_id)
-
-
 def refresh(context, users, classes, tags, first_state=None):
     userCheck = {}
     for item_type, item_info in users.items():
@@ -322,3 +306,19 @@ def filter(api: sly.Api, task_id, context, state, app_logger):
     refresh_objects_table(context, userCheck, classCheck, fields)
     refresh_tags_table(context, userCheck, tagCheck, fields)
     g.api.task.set_fields(g.task_id, fields)
+
+
+def _get_or_create_tag_meta(project_id, tag_meta):
+    project_meta = cache.get_meta(project_id)
+    project_tag_meta: sly.TagMeta = project_meta.get_tag_meta(tag_meta.name)
+    if project_tag_meta is None:
+        project_meta = project_meta.add_tag_meta(tag_meta)
+        cache.update_project_meta(project_id, project_meta)
+        project_meta = cache.get_meta(project_id)
+        project_tag_meta = project_meta.get_tag_meta(tag_meta.name)
+    return project_tag_meta
+
+
+def _assign_tag_to_image(project_id, image_id, tag_meta):
+    project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
+    g.api.image.add_tag(image_id, project_tag_meta.sly_id)
