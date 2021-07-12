@@ -48,6 +48,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 **Step 1**: In opened window there are 2 avalible tabs: `Objects` and `Tags`. Each tab consists of 3 sections: 
 For Objects:
  - `Filtered Users`, `Filtered classes` and `Filtered objects` 
+
 For `Tags`:
  - `Filtered users`, `Filtered tags` and `Filtered tags by users`
 
