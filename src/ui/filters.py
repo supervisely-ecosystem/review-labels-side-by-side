@@ -201,7 +201,7 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
                 res_tags.append(tag)
 
     tags_table = []
-    tags_check = {}
+    tags_check = {i: False for i in tagCheck}  # {}
     for tag in res_tags:
         tags_table.append({
             "tagName": tag.name,
@@ -209,6 +209,7 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
             "tagId": str(tag.meta.sly_id)
         })
         tags_check[tag.name] = True  # str(tag.meta.sly_id)
+
     fields.extend([
         {"field": "data.tagsTable", "payload": tags_table},
         {"field": "state.tagCheck", "payload": tags_check},
