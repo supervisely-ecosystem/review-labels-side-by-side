@@ -183,15 +183,18 @@
             <table class="beautiful-table al" style="width: 100%;">
                 <thead>
                 <th>Tag</th>
-                <th>Value</th>
+<!--                <th>Value</th>-->
                 <th>Created By</th>
                 </thead>
                 <tbody>
                 <tr v-for="tag in data.tagTable">
                     <td>
                         <el-checkbox class="small" v-model="state.tagTableCheck[tag.tagId]">{{tag.tagName}}</el-checkbox>
+                        <div v-if="tag.tagValue">
+                            <i class="zmdi zmdi-tag zmdi-hc-flip-horizontal mr50"></i>{{tag.tagValue}}
+                        </div>
                     </td>
-                    <td>{{tag.tagValue}}</td>
+<!--                    <td>{{tag.tagValue}}</td>-->
                     <td>{{tag.createdBy}}</td>
                 </tr>
                 </tbody>
