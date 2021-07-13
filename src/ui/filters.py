@@ -305,13 +305,12 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
             # new_tag.created_at = None
             res_tags.append(new_tag)
 
-    tag_names = list(set([i.name for i in res_tags]))
-    tag_metas = [project_meta.get_tag_meta(tag_name) for tag_name in tag_names]
-    for tag_meta in tag_metas:
-        _assign_tag_to_image(project_id, image_id, tag_meta)
-    # cache.get_annotation(project_id, image_id, optimize=False)
-    # for tag in res_tags:
-    #     _assign_tag_to_image(project_id, image_id, project_meta.get_tag_meta(tag.name), value=tag.value)
+    # tag_names = list(set([i.name for i in res_tags]))
+    # tag_metas = [project_meta.get_tag_meta(tag_name) for tag_name in tag_names]
+    # # for tag_meta in tag_metas:
+    # #     _assign_tag_to_image(project_id, image_id, tag_meta)
+    for tag in res_tags:
+        _assign_tag_to_image(project_id, image_id, project_meta.get_tag_meta(tag.name), value=tag.value)
     cache.get_annotation(project_id, image_id, optimize=False)
 
     if job_id is not None:
