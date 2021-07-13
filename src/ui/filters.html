@@ -190,11 +190,10 @@
                 <tr v-for="tag in data.tagTable">
                     <td>
                         <el-checkbox class="small" v-model="state.tagTableCheck[tag.tagId]">{{tag.tagName}}</el-checkbox>
-                        <div v-if="tag.tagValue">
-                            <i class="zmdi zmdi-tag zmdi-hc-flip-horizontal mr50"></i>{{tag.tagValue}}
+                        <div class="fflex" v-if="tag.tagValue">
+                            <i class="zmdi zmdi-tag zmdi-hc-flip-horizontal"></i><div style="margin-left: 5px">{{tag.tagValue}}</div>
                         </div>
                     </td>
-<!--                    <td>{{tag.tagValue}}</td>-->
                     <td>{{tag.createdBy}}</td>
                 </tr>
                 </tbody>
