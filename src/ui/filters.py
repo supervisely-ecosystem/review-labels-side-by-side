@@ -91,6 +91,23 @@ def get_tags(context, ann: sly.Annotation):
     return res
 
 
+def get_markups(context):
+    project_id = context["projectId"]
+    image_id = context["imageId"]
+
+    project_meta = cache.get_meta(project_id)
+    image_info = cache.get_image_info(image_id)
+    ann = cache.get_annotation(project_id, image_id)
+
+    first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
+
+    fields = [
+        {"field": "state.firstState", "payload": first_state}
+    ]
+    g.api.task.set_fields(g.task_id, fields)
+    return first_state, ann
+
+
 def refresh(context, users, classes, tags, first_state=None):
     userCheck = {}
     for item_type, item_info in users.items():
@@ -117,6 +134,7 @@ def refresh(context, users, classes, tags, first_state=None):
         {"field": "state.tagCheck", "payload": tagCheck},
 
         {"field": "state.firstState", "payload": first_state},
+
         # {"field": "data.objects", "payload": None},
         # {"field": "state.objCheck", "payload": None},
     ]
@@ -190,7 +208,7 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
     for tag in res_tags:
         tags_table.append({
             "tagName": tag.name,
-            "tagValue": tag.value if tag.value else '-',
+            "tagValue": tag.value if tag.value else None,
             "createdBy": tag.labeler_login,
             "tagId": str(tag.sly_id)
         })
@@ -266,7 +284,7 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
     if job_id is not None:
         api.add_header('x-job-id', str(job_id))
 
-    selected_tags = state["tagsTableCheck"]
+    selected_tags = state["tagTableCheck"]
     project_id = context["projectId"]
     image_id = context["imageId"]
 
@@ -280,7 +298,6 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
     res_tags = []
     for tag in ann.img_tags:
         sly_id = str(tag.sly_id)
-        # sly_id = tag.name
         if sly_id in selected_tags and selected_tags[sly_id] is True:
             new_tag = tag.clone()
             # new_tag.labeler_login = user_login
@@ -292,6 +309,9 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
     tag_metas = [project_meta.get_tag_meta(tag_name) for tag_name in tag_names]
     for tag_meta in tag_metas:
         _assign_tag_to_image(project_id, image_id, tag_meta)
+    # cache.get_annotation(project_id, image_id, optimize=False)
+    # for tag in res_tags:
+    #     _assign_tag_to_image(project_id, image_id, project_meta.get_tag_meta(tag.name), value=tag.value)
     cache.get_annotation(project_id, image_id, optimize=False)
 
     if job_id is not None:
@@ -305,6 +325,9 @@ def filter(api: sly.Api, task_id, context, state, app_logger):
     classCheck = state["classCheck"]
     tagCheck = state["tagCheck"]
     fields = []
+
+    get_markups(context)
+
     refresh_objects_table(context, userCheck, classCheck, fields)
     refresh_tags_table(context, userCheck, tagCheck, fields)
     g.api.task.set_fields(g.task_id, fields)
@@ -321,6 +344,9 @@ def _get_or_create_tag_meta(project_id, tag_meta):
     return project_tag_meta
 
 
-def _assign_tag_to_image(project_id, image_id, tag_meta):
+def _assign_tag_to_image(project_id, image_id, tag_meta, value=None):
     project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
-    g.api.image.add_tag(image_id, project_tag_meta.sly_id)
+    g.api.image.add_tag(image_id, project_tag_meta.sly_id, value)
+
+
+
