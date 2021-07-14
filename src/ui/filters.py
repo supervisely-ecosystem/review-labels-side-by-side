@@ -244,7 +244,7 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
 @g.my_app.callback("copy_objects")
 @sly.timeit
 def copy_objects(api: sly.Api, task_id, context, state, app_logger):
-    job_id = context.get("jobId", None)
+    job_id = None  # context.get("jobId", None)
     if job_id is not None:
         api.add_header('x-job-id', str(job_id))
 
