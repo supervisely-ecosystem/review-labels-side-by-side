@@ -1,6 +1,6 @@
 <el-tabs style="margin-top: 10px;" type="border-card" style="width: 220px;" class="mr5">
     <el-tab-pane label="objects">
-        <div v-if="data.objects">
+        <div v-if="state.firstAnnotation.labels!=0">
             <sly-field title="Filter by users" v-if="data.users">
                 <div class="fflex">
                     <el-button type="text" size="mini"
@@ -70,7 +70,8 @@
                         <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                     </el-button>
                 </div>
-                <table class="beautiful-table al" style="width: 100%;">
+                <table v-if="data.objects.length!=0"
+                       class="beautiful-table al" style="width: 100%;">
                     <thead>
                     <th>Class</th>
                     <!--                    <th>Shape</th>-->
@@ -93,6 +94,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div v-else>
+                    There are no objects on image
+                </div>
             </sly-field>
             <el-button v-if="data.objects"
                        class="regular" size="small"
@@ -113,7 +117,7 @@
         </div>
     </el-tab-pane>
     <el-tab-pane label="tags">
-        <div v-if="data.tagTable">
+        <div v-if="state.firstAnnotation.img_tags!=0">
             <sly-field title="Filter by users" v-if="data.users">
                 <div class="fflex">
                     <el-button type="text" size="mini"
@@ -186,10 +190,10 @@
                         <i class="zmdi zmdi-square-o mr5"></i>Deselect all
                     </el-button>
                 </div>
-                <table class="beautiful-table al" style="width: 100%;">
+                <table v-if="data.tagTable.length!=0"
+                       class="beautiful-table al" style="width: 100%;">
                     <thead>
                     <th>Tag</th>
-    <!--                <th>Value</th>-->
                     <th>Created By</th>
                     </thead>
                     <tbody>
@@ -204,6 +208,9 @@
                     </tr>
                     </tbody>
                 </table>
+                <div v-else>
+                    There are no tags on image
+                </div>
             </sly-field>
             <el-button v-if="data.tagTable"
                        style="margin-left: 0px; margin-top: 10px;"
