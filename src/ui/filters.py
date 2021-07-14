@@ -244,7 +244,8 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
 @g.my_app.callback("copy_objects")
 @sly.timeit
 def copy_objects(api: sly.Api, task_id, context, state, app_logger):
-    job_id = None  # context.get("jobId", None)
+    sly.logger.debug("Start copy_objects")
+    job_id = context.get("jobId", None)
     if job_id is not None:
         api.add_header('x-job-id', str(job_id))
 
@@ -268,18 +269,23 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
             new_geom.labeler_login = user_login
             new_geom.updated_at = None
             new_geom.created_at = None
-            res_labels.append(label.clone(geometry=new_geom))
 
-    new_ann = ann.add_labels(res_labels)
-    cache.update_ann(project_id, image_id, new_ann, api=api)
+            new_label = label.clone(geometry=new_geom)
+            res_labels.append(new_label)
 
+    api.annotation.append_labels(image_id, res_labels)
+    cache.get_annotation(project_id, image_id, optimize=False)
+    #new_ann = ann.add_labels(res_labels)
+    #cache.update_ann(project_id, image_id, new_ann, api=api)
     if job_id is not None:
         api.pop_header('x-job-id')
+    sly.logger.debug("Finish copy_objects")
 
 
 @g.my_app.callback("copy_tags")
 @sly.timeit
 def copy_tags(api: sly.Api, task_id, context, state, app_logger):
+    sly.logger.debug("Start copy_tags")
     job_id = context.get("jobId", None)
     if job_id is not None:
         api.add_header('x-job-id', str(job_id))
@@ -300,21 +306,18 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
         sly_id = str(tag.sly_id)
         if sly_id in selected_tags and selected_tags[sly_id] is True:
             new_tag = tag.clone()
-            # new_tag.labeler_login = user_login
-            # new_tag.updated_at = None
-            # new_tag.created_at = None
+            new_tag.labeler_login = user_login
+            new_tag.updated_at = None
+            new_tag.created_at = None
             res_tags.append(new_tag)
 
-    # tag_names = list(set([i.name for i in res_tags]))
-    # tag_metas = [project_meta.get_tag_meta(tag_name) for tag_name in tag_names]
-    # # for tag_meta in tag_metas:
-    # #     _assign_tag_to_image(project_id, image_id, tag_meta)
     for tag in res_tags:
         _assign_tag_to_image(project_id, image_id, project_meta.get_tag_meta(tag.name), value=tag.value, api=api)
     cache.get_annotation(project_id, image_id, optimize=False, api=api)
 
     if job_id is not None:
         api.pop_header('x-job-id')
+    sly.logger.debug("Finish copy_tags")
 
 
 @g.my_app.callback("filter")
