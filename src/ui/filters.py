@@ -177,8 +177,8 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
         objects_check[str(label.geometry.sly_id)] = True
 
     fields.extend([
-        {"field": "data.objects", "payload": objects_table},
-        {"field": "state.objCheck", "payload": objects_check},
+        {"field": "data.objects", "payload": objects_table if objects_table else None},
+        {"field": "state.objCheck", "payload": objects_check if objects_table else None},
     ])
 
 
@@ -215,8 +215,8 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
         tags_check[str(tag.sly_id)] = True
 
     fields.extend([
-        {"field": "data.tagTable", "payload": tags_table},
-        {"field": "state.tagTableCheck", "payload": tags_check},
+        {"field": "data.tagTable", "payload": tags_table if tags_table else None},
+        {"field": "state.tagTableCheck", "payload": tags_check if tags_table else None},
     ])
 
 
