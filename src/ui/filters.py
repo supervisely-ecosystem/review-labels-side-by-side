@@ -257,7 +257,7 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
 
     project_meta = cache.get_meta(project_id)
     image_info = cache.get_image_info(image_id)
-    ann = cache.get_annotation(project_id, image_id)
+    ann = cache.get_annotation(project_id, image_id, optimize=False)
 
     res_labels = []
     for label in ann.labels:
@@ -271,7 +271,7 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
             res_labels.append(label.clone(geometry=new_geom))
 
     new_ann = ann.add_labels(res_labels)
-    cache.update_ann(project_id, image_id, new_ann)
+    cache.update_ann(project_id, image_id, new_ann, api=api)
 
     if job_id is not None:
         api.pop_header('x-job-id')
@@ -310,8 +310,8 @@ def copy_tags(api: sly.Api, task_id, context, state, app_logger):
     # # for tag_meta in tag_metas:
     # #     _assign_tag_to_image(project_id, image_id, tag_meta)
     for tag in res_tags:
-        _assign_tag_to_image(project_id, image_id, project_meta.get_tag_meta(tag.name), value=tag.value)
-    cache.get_annotation(project_id, image_id, optimize=False)
+        _assign_tag_to_image(project_id, image_id, project_meta.get_tag_meta(tag.name), value=tag.value, api=api)
+    cache.get_annotation(project_id, image_id, optimize=False, api=api)
 
     if job_id is not None:
         api.pop_header('x-job-id')
@@ -343,9 +343,9 @@ def _get_or_create_tag_meta(project_id, tag_meta):
     return project_tag_meta
 
 
-def _assign_tag_to_image(project_id, image_id, tag_meta, value=None):
+def _assign_tag_to_image(project_id, image_id, tag_meta, value=None, api=g.api):
     project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
-    g.api.image.add_tag(image_id, project_tag_meta.sly_id, value)
+    api.image.add_tag(image_id, project_tag_meta.sly_id, value)
 
 
 

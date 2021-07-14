@@ -27,10 +27,10 @@ def get_meta(project_id, optimize=True):
     return meta
 
 
-def get_annotation(project_id, image_id, optimize=True):
+def get_annotation(project_id, image_id, optimize=True, api=g.api):
     ann = None
     if image_id not in image2ann or optimize is False:
-        ann_json = g.api.annotation.download(image_id).annotation
+        ann_json = api.annotation.download(image_id).annotation
         ann = sly.Annotation.from_json(ann_json, get_meta(project_id))
         image2ann[image_id] = ann
     else:
@@ -59,9 +59,9 @@ def update_project_meta(project_id, project_meta: sly.ProjectMeta):
     get_meta(project_id, optimize=False)
 
 
-def update_ann(project_id, image_id, ann: sly.Annotation):
-    g.api.annotation.upload_ann(image_id, ann)
-    get_annotation(project_id, image_id, optimize=False)
+def update_ann(project_id, image_id, ann: sly.Annotation, api=g.api):
+    api.annotation.upload_ann(image_id, ann)
+    get_annotation(project_id, image_id, optimize=False, api=api)
 
 
 def get_user_login(user_id):
