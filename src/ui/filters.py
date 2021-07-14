@@ -8,7 +8,7 @@ import cache
 
 def init(data, state):
     data["users"] = None  # {}
-    state["userCheck"] = None  #{}
+    state["userCheck"] = None  # {}
 
     data["classes"] = None
     state["classCheck"] = None
@@ -22,7 +22,8 @@ def init(data, state):
     data["tagTable"] = None
     state["tagTableCheck"] = None
 
-    state['firstState'] = None
+    state["firstState"] = None
+    state["firstAnnotation"] = {"labels": 0, "tags": 0}
 
 
 def get_users(context, ann: sly.Annotation):
@@ -102,13 +103,14 @@ def get_markups(context):
     first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
 
     fields = [
-        {"field": "state.firstState", "payload": first_state}
+        {"field": "state.firstState", "payload": first_state},
+        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
     ]
     g.api.task.set_fields(g.task_id, fields)
     return first_state, ann
 
 
-def refresh(context, users, classes, tags, first_state=None):
+def refresh(context, users, classes, tags, first_state=None, ann=None):
     userCheck = {}
     for item_type, item_info in users.items():
         userCheck[item_type] = {}
@@ -134,7 +136,7 @@ def refresh(context, users, classes, tags, first_state=None):
         {"field": "state.tagCheck", "payload": tagCheck},
 
         {"field": "state.firstState", "payload": first_state},
-
+        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
         # {"field": "data.objects", "payload": None},
         # {"field": "state.objCheck", "payload": None},
     ]
@@ -177,8 +179,8 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
         objects_check[str(label.geometry.sly_id)] = True
 
     fields.extend([
-        {"field": "data.objects", "payload": objects_table if objects_table else None},
-        {"field": "state.objCheck", "payload": objects_check if objects_table else None},
+        {"field": "data.objects", "payload": objects_table},
+        {"field": "state.objCheck", "payload": objects_check},
     ])
 
 
@@ -215,8 +217,8 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
         tags_check[str(tag.sly_id)] = True
 
     fields.extend([
-        {"field": "data.tagTable", "payload": tags_table if tags_table else None},
-        {"field": "state.tagTableCheck", "payload": tags_check if tags_table else None},
+        {"field": "data.tagTable", "payload": tags_table},
+        {"field": "state.tagTableCheck", "payload": tags_check},
     ])
 
 
