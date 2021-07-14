@@ -13,7 +13,7 @@ def manual_selected_image_changed(api: sly.Api, task_id, context, state, app_log
     users = filters.get_users(context, ann)
     classes = filters.get_classes(context, ann)
     tags = filters.get_tags(context, ann)
-    filters.refresh(context, users, classes, tags, first_state)
+    filters.refresh(context, users, classes, tags, first_state, ann)
 
 
 def main():
