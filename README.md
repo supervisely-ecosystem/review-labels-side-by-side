@@ -32,7 +32,7 @@ Application allows to review pre-marked by annotators image projects, choose the
    - open app page by clicking on it
    - add app to your team by pressing `Get` button
 
-<img src="https://i.imgur.com/tl60QE4.png"/>
+<img src="https://i.imgur.com/ONu0Oid.png"/>
 
 **Step 2**: Create new [Labeling job](https://docs.supervise.ly/labeling/jobs) and open it. Look for project's extra options below.
 
