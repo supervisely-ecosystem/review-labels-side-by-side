@@ -63,6 +63,7 @@ For `Tags`:
  - To copy objects and tags press `Copy selected objects` for objects and `Copy selected tags` for tags respectively. 
    
    Corresponding data will appear at annotation area a few moments later.
+   When you hover over the table element, the corresponding object in the gallery will be highlighted.
 
 <img src="https://i.imgur.com/IwYpP4c.png">
 
