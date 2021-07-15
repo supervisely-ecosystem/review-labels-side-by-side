@@ -11,6 +11,7 @@
   "task_location": "application_sessions",
   "isolate": true,
   "headless": false,
+  "instance_version": "6.4.20",
   "integrated_into": ["image_annotation_tool"],
   "icon": "https://img.icons8.com/color/100/000000/rules-book.png",
   "icon_background": "#FFFFFF"
