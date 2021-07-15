@@ -21,7 +21,7 @@
 </div>
 
 # Overview
-Application allows to review pre-marked by annotators image projects, choose the best markups and tags. Also, these markup and tags can be transferred to the original image for your own futher corrections.
+Application allows to review pre-marked by annotators image projects, choose the best markups and tags. Also, these labels and tags can be transferred to the original image for your own futher corrections.
 
 <img src="https://i.imgur.com/JFqsFBE.png"/>
 
