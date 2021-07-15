@@ -23,6 +23,9 @@
 # Overview
 Application allows to review pre-marked by annotators image projects, choose the best markups and tags. Also, these markup and tags can be transferred to the original image for your own futher corrections.
 
+<img src="https://i.imgur.com/JFqsFBE.png"/>
+
+
 # How To Start
 
 **Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
