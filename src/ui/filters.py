@@ -100,7 +100,10 @@ def get_markups(context):
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
 
-    first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
+    # first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
+    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+    gallery.single_image_gallery._set_item(image_info.full_storage_url, ann)
+    first_state = gallery.single_image_gallery.update(output=True)
 
     fields = [
         {"field": "state.firstState", "payload": first_state},
@@ -165,7 +168,10 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
                 res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-    gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+    # gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+    gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update()
 
     objects_table = []
     objects_check = {}
@@ -240,7 +246,10 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
             res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-    gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+    # gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+    gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update()
 
 
 @g.my_app.callback("copy_objects")

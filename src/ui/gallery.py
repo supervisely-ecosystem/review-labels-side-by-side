@@ -1,6 +1,14 @@
 import supervisely_lib as sly
 import globals as g
 import cache
+from supervisely_lib.app.widgets import SingleImageGallery
+
+single_image_gallery = SingleImageGallery(
+    task_id=g.task_id,
+    api=g.api,
+    v_model='data.gallery',
+    project_meta=sly.ProjectMeta()  # заглушка
+)
 
 
 def init(data, state):
