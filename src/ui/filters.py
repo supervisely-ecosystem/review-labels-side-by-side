@@ -99,11 +99,14 @@ def get_markups(context):
     project_meta = cache.get_meta(project_id)
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
-
-    # first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
-    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
-    gallery.single_image_gallery._set_item(image_info.full_storage_url, ann)
-    first_state = gallery.single_image_gallery.update(output=True)
+    try:
+        print('SDK method')
+        gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+        gallery.single_image_gallery._set_item(image_info.full_storage_url, ann)
+        first_state = gallery.single_image_gallery.update(output=True)
+    except:
+        print('Manual method')
+        first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
 
     fields = [
         {"field": "state.firstState", "payload": first_state},
@@ -168,10 +171,14 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
                 res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-    # gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
-    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
-    gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
-    gallery.single_image_gallery.update()
+
+    try:
+        gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+        gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
+        gallery.single_image_gallery.update()
+    except:
+        gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+
 
     objects_table = []
     objects_check = {}
@@ -246,10 +253,12 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
             res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-    # gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
-    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
-    gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
-    gallery.single_image_gallery.update()
+    try:
+        gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+        gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
+        gallery.single_image_gallery.update()
+    except:
+        gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
 
 
 @g.my_app.callback("copy_objects")
