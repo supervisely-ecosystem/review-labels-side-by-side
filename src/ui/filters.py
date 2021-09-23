@@ -106,7 +106,7 @@ def get_markups(context):
         first_state = gallery.single_image_gallery.update(output=True)
     except:
         print('Manual method')
-        first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
+        first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True, True)
 
     fields = [
         {"field": "state.firstState", "payload": first_state},
