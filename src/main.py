@@ -9,6 +9,7 @@ import filters
 @g.my_app.callback("manual_selected_image_changed")
 @sly.timeit
 def manual_selected_image_changed(api: sly.Api, task_id, context, state, app_logger):
+
     first_state, ann = filters.get_markups(context)
     users = filters.get_users(context, ann)
     classes = filters.get_classes(context, ann)

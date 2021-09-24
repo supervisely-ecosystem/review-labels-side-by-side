@@ -106,13 +106,12 @@ def get_markups(context):
         first_state = gallery.single_image_gallery.update(output=True)
     except:
         print('Manual method')
-        first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True, True)
-
-    fields = [
-        {"field": "state.firstState", "payload": first_state},
-        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
-    ]
-    g.api.task.set_fields(g.task_id, fields)
+        first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, False, True)
+        fields = [
+            {"field": "state.firstState", "payload": first_state},
+            {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
+        ]
+        g.api.task.set_fields(g.task_id, fields)
     return first_state, ann
 
 
@@ -171,7 +170,6 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
                 res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-
     try:
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
         gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
@@ -201,8 +199,6 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
     project_id = context["projectId"]
     image_id = context["imageId"]
 
-    # project_meta = cache.get_meta(project_id)
-    # image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
 
     res_tags = []
