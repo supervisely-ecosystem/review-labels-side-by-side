@@ -103,6 +103,7 @@ def get_markups(context):
         print('SDK method')
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
         gallery.single_image_gallery.set_item(image_info.full_storage_url, ann)
+        # gallery.single_image_gallery.set_item(image_info.full_storage_url, None)
         first_state = gallery.single_image_gallery.update(output=True)
     except:
         print('Manual method')
@@ -128,7 +129,7 @@ def refresh(context, users, classes, tags, first_state=None, ann=None):
 
     tagCheck = {}
     for tag_info in tags:
-        tagCheck[tag_info["name"]] = True  # ??? name ???
+        tagCheck[tag_info["name"]] = True
 
     fields = [
         {"field": "data.users", "payload": users},
@@ -173,6 +174,7 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
     try:
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
         gallery.single_image_gallery.set_item(image_info.full_storage_url, new_ann)
+        # gallery.single_image_gallery.set_item(image_info.full_storage_url, None)
         gallery.single_image_gallery.update()
     except:
         gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
@@ -252,6 +254,7 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
     try:
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
         gallery.single_image_gallery.set_item(image_info.full_storage_url, new_ann)
+        # gallery.single_image_gallery.set_item(image_info.full_storage_url, None)
         gallery.single_image_gallery.update()
     except:
         gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
