@@ -99,14 +99,9 @@ def get_markups(context):
     project_meta = cache.get_meta(project_id)
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
-
-    first_state = gallery.refresh(project_meta, image_info.full_storage_url, ann, True)
-
-    fields = [
-        {"field": "state.firstState", "payload": first_state},
-        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
-    ]
-    g.api.task.set_fields(g.task_id, fields)
+    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+    gallery.single_image_gallery.set_item(image_info.full_storage_url, ann)
+    first_state = gallery.single_image_gallery.update(output=True)
     return first_state, ann
 
 
@@ -123,7 +118,7 @@ def refresh(context, users, classes, tags, first_state=None, ann=None):
 
     tagCheck = {}
     for tag_info in tags:
-        tagCheck[tag_info["name"]] = True  # ??? name ???
+        tagCheck[tag_info["name"]] = True
 
     fields = [
         {"field": "data.users", "payload": users},
@@ -165,7 +160,9 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
                 res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-    gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+    gallery.single_image_gallery.set_item(image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update()
 
     objects_table = []
     objects_check = {}
@@ -188,8 +185,6 @@ def refresh_tags_table(context, userCheck, tagCheck, fields):
     project_id = context["projectId"]
     image_id = context["imageId"]
 
-    # project_meta = cache.get_meta(project_id)
-    # image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
 
     res_tags = []
@@ -240,7 +235,10 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
             res_labels.append(label)
 
     new_ann = ann.clone(labels=res_labels)
-    gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
+
+    gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
+    gallery.single_image_gallery.set_item(image_info.full_storage_url, new_ann)
+    gallery.single_image_gallery.update()
 
 
 @g.my_app.callback("copy_objects")
@@ -329,9 +327,7 @@ def filter(api: sly.Api, task_id, context, state, app_logger):
     classCheck = state["classCheck"]
     tagCheck = state["tagCheck"]
     fields = []
-
     get_markups(context)
-
     refresh_objects_table(context, userCheck, classCheck, fields)
     refresh_tags_table(context, userCheck, tagCheck, fields)
     g.api.task.set_fields(g.task_id, fields)

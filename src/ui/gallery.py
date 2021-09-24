@@ -2,6 +2,18 @@ import supervisely_lib as sly
 import globals as g
 import cache
 
+try:
+    from supervisely_lib.app.widgets import SingleImageGallery
+
+    single_image_gallery = SingleImageGallery(
+        task_id=g.task_id,
+        api=g.api,
+        v_model='data.gallery',
+        project_meta=sly.ProjectMeta()  # заглушка
+    )
+except:
+    pass
+
 
 def init(data, state):
     data["gallery"] = None
@@ -9,7 +21,7 @@ def init(data, state):
     pass
 
 
-def refresh(project_meta: sly.ProjectMeta, image_url, ann: sly.Annotation, output=False):
+def refresh(project_meta: sly.ProjectMeta, image_url, ann: sly.Annotation, update_options=False, output=False):
     content = {
         "projectMeta": project_meta.to_json(),
         "annotations": {
@@ -25,12 +37,15 @@ def refresh(project_meta: sly.ProjectMeta, image_url, ann: sly.Annotation, outpu
         "opacity": 0.8,
         "fillRectangle": False,
     }
+    data_infos = {"content": content}
+    if update_options:
+        data_infos["options"] = options
     fields = [
-        {"field": "data.gallery", "payload": {"content": content, "options": options}},
+        {"field": "data.gallery", "payload": data_infos},
     ]
     g.api.task.set_fields(g.task_id, fields)
     if output:
-        return {"content": content, "options": options}
+        return data_infos
 
 # def refresh_labels(labels):
 #     fields = [
