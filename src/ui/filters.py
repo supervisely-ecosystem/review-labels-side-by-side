@@ -102,7 +102,7 @@ def get_markups(context):
     try:
         print('SDK method')
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
-        gallery.single_image_gallery._set_item(image_info.full_storage_url, ann)
+        gallery.single_image_gallery.set_item(image_info.full_storage_url, ann)
         first_state = gallery.single_image_gallery.update(output=True)
     except:
         print('Manual method')
@@ -172,7 +172,7 @@ def refresh_objects_table(context, userCheck, classCheck, fields):
     new_ann = ann.clone(labels=res_labels)
     try:
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
-        gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
+        gallery.single_image_gallery.set_item(image_info.full_storage_url, new_ann)
         gallery.single_image_gallery.update()
     except:
         gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
@@ -251,7 +251,7 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
     new_ann = ann.clone(labels=res_labels)
     try:
         gallery.single_image_gallery.update_project_meta(project_meta=project_meta)
-        gallery.single_image_gallery._set_item(image_info.full_storage_url, new_ann)
+        gallery.single_image_gallery.set_item(image_info.full_storage_url, new_ann)
         gallery.single_image_gallery.update()
     except:
         gallery.refresh(project_meta, image_info.full_storage_url, new_ann)
