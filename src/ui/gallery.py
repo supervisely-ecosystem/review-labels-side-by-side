@@ -1,9 +1,9 @@
-import supervisely_lib as sly
+import supervisely as sly
 import globals as g
 import cache
 
 try:
-    from supervisely_lib.app.widgets import SingleImageGallery
+    from supervisely.app.v1.widgets.single_image_gallery import SingleImageGallery
 
     single_image_gallery = SingleImageGallery(
         task_id=g.task_id,

@@ -1,7 +1,7 @@
 from collections import defaultdict
 
 import gallery
-import supervisely_lib as sly
+import supervisely as sly
 import globals as g
 import cache
 

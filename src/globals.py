@@ -1,8 +1,9 @@
 import os
-import supervisely_lib as sly
+import supervisely as sly
 import sys
+from supervisely.app.v1.app_service import AppService
 from pathlib import Path
-my_app = sly.AppService()
+my_app: AppService = AppService()
 
 task_id = my_app.task_id
 owner_id = int(os.environ['context.userId'])

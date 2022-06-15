@@ -1,5 +1,5 @@
 import cache
-import supervisely_lib as sly
+import supervisely as sly
 import globals as g
 import ui
 import gallery
@@ -31,6 +31,5 @@ def main():
     g.my_app.run(data=data, state=state)
 
 
-#@TODO: min instance version
 if __name__ == "__main__":
     sly.main_wrapper("main", main)
