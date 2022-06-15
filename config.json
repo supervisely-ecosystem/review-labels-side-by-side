@@ -6,13 +6,13 @@
     "labeling"
   ],
   "description": "Filter objects and tags by user and copy them to working area",
-  "docker_image": "supervisely/base-py-sdk:6.1.97",
+  "docker_image": "supervisely/base-py-sdk:6.23.1",
+  "instance_version": "6.4.57",
   "main_script": "src/main.py",
   "gui_template": "src/gui.html",
   "task_location": "application_sessions",
   "isolate": true,
   "headless": false,
-  "instance_version": "6.4.20",
   "integrated_into": [
     "image_annotation_tool"
   ],
