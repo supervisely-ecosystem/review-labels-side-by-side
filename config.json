@@ -2,6 +2,7 @@
   "name": "Review labels side-by-side",
   "type": "app",
   "categories": [
+    "images",
     "labeling"
   ],
   "description": "Filter objects and tags by user and copy them to working area",
