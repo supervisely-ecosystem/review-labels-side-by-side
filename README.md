@@ -1,5 +1,5 @@
 <div align="center" markdown>
-<img src="https://i.imgur.com/xaR6uNF.png"/>
+<img src="https://user-images.githubusercontent.com/106374579/187885841-690d3d80-557b-4f1d-a421-a254aa2260fd.png"/>
 
 # Review labels side by side
 
