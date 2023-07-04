@@ -22,7 +22,7 @@
 # Overview
 Application allows to review pre-marked by annotators image projects, choose the best markups and tags. Also, these labels and tags can be transferred to the original image for your own futher corrections.
 
-<img src="https://i.imgur.com/JFqsFBE.png"/>
+<img src="media/ov1.png"/>
 
 
 # How To Start
@@ -34,15 +34,15 @@ Application allows to review pre-marked by annotators image projects, choose the
    - open app page by clicking on it
    - add app to your team by pressing `Get` button
 
-<img src="https://i.imgur.com/JpDbzzz.png"/>
+<img src="media/hts1.png"/>
 
 **Step 2**: Create new [Labeling job](https://docs.supervise.ly/labeling/jobs) and open it. Look for project's extra options below.
 
-<img src="https://i.imgur.com/simXGmk.png"/>
+<img src="media/hts2.png"/>
 
 **Step 3**: Open newly created Labeling job -> Run app by clicking `Run` button. Open it. 
 
-<img src="https://i.imgur.com/d5PHeMZ.png"/>
+<img src="media/hts3.png"/>
 
    **Note**: You can replace `Apps` area to the left/right by managing `Panel settings` (step 3 on the picture)
 
@@ -56,7 +56,7 @@ For Objects:
 For `Tags`:
  - `Filter by users`, `Filter by tags` and `Filtered tags`
 
-<img src="https://i.imgur.com/ohkTWR6.png"/>
+<img src="media/htu1.png"/>
 
 **Step 2**: Select target users, classes, tags and copy them to annotation area(right section). 
    
@@ -67,13 +67,13 @@ For `Tags`:
    Corresponding data will appear at annotation area a few moments later.
    When you hover over the table element, the corresponding object in the gallery will be highlighted.
 
-<img src="https://i.imgur.com/IwYpP4c.png">
+<img src="media/htu2.png">
 
 # Extra options
 
 **Step 1**:Set recommended options for target Project:
 
-<img src="https://i.imgur.com/zlWukS5.png" height="1000px"/>
+<img src="media/e1.png" height="1000px"/>
 
 **Step 2**: Create Labeling Job: set following options
  - Title
