@@ -16,7 +16,7 @@
   "integrated_into": [
     "image_annotation_tool"
   ],
-  "icon": "https://img.icons8.com/color/100/000000/rules-book.png",
+  "icon": "media/icon.png",
   "icon_background": "#FFFFFF",
   "poster": "https://user-images.githubusercontent.com/106374579/187885841-690d3d80-557b-4f1d-a421-a254aa2260fd.png"
 }
