@@ -11,11 +11,11 @@
 </p>
 
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervise.ly/apps/supervisely-ecosystem/review-labels-side-by-side)
-[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervise.ly/slack)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervisely.com/apps/supervisely-ecosystem/review-labels-side-by-side)
+[![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervisely.com/slack)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/review-labels-side-by-side)
-[![views](https://app.supervise.ly/img/badges/views/supervisely-ecosystem/review-labels-side-by-side.png)](https://supervise.ly)
-[![runs](https://app.supervise.ly/img/badges/runs/supervisely-ecosystem/review-labels-side-by-side.png)](https://supervise.ly)
+[![views](https://app.supervisely.com/img/badges/views/supervisely-ecosystem/review-labels-side-by-side.png)](https://supervisely.com)
+[![runs](https://app.supervisely.com/img/badges/runs/supervisely-ecosystem/review-labels-side-by-side.png)](https://supervisely.com)
 
 </div>
 
@@ -27,7 +27,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 # How To Start
 
-**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervise.ly/apps/review-labels-side-by-side) if it is not there.
+**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervisely.com/apps/review-labels-side-by-side) if it is not there.
     
    - select `Ecosystem` in Main Menue
    - put `Review labels side-by-side` in the search bar
@@ -36,7 +36,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 <img src="https://i.imgur.com/JpDbzzz.png"/>
 
-**Step 2**: Create new [Labeling job](https://docs.supervise.ly/labeling/jobs) and open it. Look for project's extra options below.
+**Step 2**: Create new [Labeling job](https://docs.supervisely.com/labeling/jobs) and open it. Look for project's extra options below.
 
 <img src="https://i.imgur.com/simXGmk.png"/>
 
