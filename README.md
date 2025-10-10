@@ -11,7 +11,7 @@
 </p>
 
 
-[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](https://ecosystem.supervisely.com/apps/supervisely-ecosystem/review-labels-side-by-side)
+[![](https://img.shields.io/badge/supervisely-ecosystem-brightgreen)](../../../../supervisely-ecosystem/review-labels-side-by-side)
 [![](https://img.shields.io/badge/slack-chat-green.svg?logo=slack)](https://supervisely.com/slack)
 ![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/supervisely-ecosystem/review-labels-side-by-side)
 [![views](https://app.supervisely.com/img/badges/views/supervisely-ecosystem/review-labels-side-by-side.png)](https://supervisely.com)
@@ -27,7 +27,7 @@ Application allows to review pre-marked by annotators image projects, choose the
 
 # How To Start
 
-**Step 1**: Add app to your team from [Ecosystem](https://ecosystem.supervisely.com/apps/review-labels-side-by-side) if it is not there.
+**Step 1**: Add app to your team from [Ecosystem](../../../../supervisely-ecosystem/review-labels-side-by-side) if it is not there.
     
    - select `Ecosystem` in Main Menue
    - put `Review labels side-by-side` in the search bar
