@@ -6,8 +6,8 @@
         "labeling"
     ],
     "description": "Filter objects and tags by user and copy them to working area",
-    "docker_image": "supervisely/labeling:0.0.5",
-    "instance_version": "6.4.57",
+    "docker_image": "supervisely/labeling:6.73.564",
+    "instance_version": "6.15.60",
     "main_script": "src/main.py",
     "gui_template": "src/gui.html",
     "task_location": "application_sessions",
