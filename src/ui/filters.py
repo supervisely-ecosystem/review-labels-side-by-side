@@ -232,15 +232,28 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
     project_id = context["projectId"]
     image_id = context["imageId"]
 
+    user_id = context["userId"]
+    user_login = cache.get_user_login(user_id)
+
     project_meta = cache.get_meta(project_id)
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
 
-    res_labels = []
-    for label in ann.labels:
-        sly_id = str(label.geometry.sly_id)
-        if sly_id in selected_objects and selected_objects[sly_id] is True:
-            res_labels.append(label)
+    try:
+        if state.get("mergeBitmapObjects", False) is True:
+            selected_labels = _get_selected_labels(ann, selected_objects)
+            res_labels = [_merge_bitmap_labels(selected_labels, ann.img_size, user_login)]
+        else:
+            res_labels = []
+            for label in ann.labels:
+                sly_id = str(label.geometry.sly_id)
+                if sly_id in selected_objects and selected_objects[sly_id] is True:
+                    res_labels.append(label)
+        _set_merge_message(None, "info")
+    except ValueError as e:
+        _set_merge_message(str(e), "error")
+        sly.logger.warning("Unable to preview merged bitmap objects", exc_info=True)
+        return
 
     new_ann = ann.clone(labels=res_labels)
 
@@ -418,4 +431,3 @@ def _set_merge_message(message, message_type):
         {"field": "data.mergeMessage", "payload": message},
         {"field": "data.mergeMessageType", "payload": message_type},
     ])
-
