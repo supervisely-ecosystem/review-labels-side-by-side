@@ -111,6 +111,23 @@
                        @click="command('copy_objects')">
                 Copy selected objects <i class="zmdi zmdi-arrow-right ml5"></i>
             </el-button>
+            <el-button v-if="data.objects"
+                       style="margin-left: 0px; margin-top: 10px;"
+                       class="regular" size="small"
+                       type="success"
+                       :disabled="data.objects.filter(obj => state.objCheck[obj.objId]).length < 2
+                                  || data.objects.filter(obj => state.objCheck[obj.objId]).some(obj => obj.shape !== 'bitmap')
+                                  || new Set(data.objects.filter(obj => state.objCheck[obj.objId]).map(obj => obj.objClass)).size !== 1"
+                       @click="command('merge_bitmap_objects')">
+                Merge selected bitmap masks
+            </el-button>
+            <el-alert v-if="data.mergeMessage"
+                      style="margin-top: 10px;"
+                      :title="data.mergeMessage"
+                      :type="data.mergeMessageType"
+                      :closable="false"
+                      show-icon>
+            </el-alert>
         </div>
         <div v-else>
             There are no objects on image

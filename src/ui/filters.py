@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 import gallery
+import numpy as np
 import supervisely as sly
 import globals as g
 import cache
@@ -21,6 +22,9 @@ def init(data, state):
 
     data["tagTable"] = None
     state["tagTableCheck"] = None
+
+    data["mergeMessage"] = None
+    data["mergeMessageType"] = "info"
 
     state["firstState"] = None
     state["firstAnnotation"] = {"labels": 0, "tags": 0}
@@ -131,7 +135,9 @@ def refresh(context, users, classes, tags, first_state=None, ann=None):
         {"field": "state.tagCheck", "payload": tagCheck},
 
         {"field": "state.firstState", "payload": first_state},
-        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
+        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}},
+        {"field": "data.mergeMessage", "payload": None},
+        {"field": "data.mergeMessageType", "payload": "info"},
         # {"field": "data.objects", "payload": None},
         # {"field": "state.objCheck", "payload": None},
     ]
@@ -282,6 +288,41 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
     sly.logger.debug("Finish copy_objects")
 
 
+@g.my_app.callback("merge_bitmap_objects")
+@sly.timeit
+def merge_bitmap_objects(api: sly.Api, task_id, context, state, app_logger):
+    sly.logger.debug("Start merge_bitmap_objects")
+    job_id = context.get("jobId", None)
+    if job_id is not None:
+        api.add_header('x-job-id', str(job_id))
+
+    try:
+        selected_objects = state["objCheck"]
+        project_id = context["projectId"]
+        image_id = context["imageId"]
+
+        user_id = context["userId"]
+        user_login = cache.get_user_login(user_id)
+
+        ann = cache.get_annotation(project_id, image_id, optimize=False)
+        selected_labels = _get_selected_labels(ann, selected_objects)
+        merged_label = _merge_bitmap_labels(selected_labels, ann.img_size, user_login)
+
+        api.annotation.append_labels(image_id, [merged_label])
+        cache.get_annotation(project_id, image_id, optimize=False)
+        _set_merge_message(
+            f"Merged {len(selected_labels)} bitmap masks into a new '{merged_label.obj_class.name}' object.",
+            "success"
+        )
+    except ValueError as e:
+        _set_merge_message(str(e), "error")
+        sly.logger.warning("Unable to merge bitmap objects", exc_info=True)
+    finally:
+        if job_id is not None:
+            api.pop_header('x-job-id')
+    sly.logger.debug("Finish merge_bitmap_objects")
+
+
 @g.my_app.callback("copy_tags")
 @sly.timeit
 def copy_tags(api: sly.Api, task_id, context, state, app_logger):
@@ -348,5 +389,53 @@ def _assign_tag_to_image(project_id, image_id, tag_meta, value=None, api=g.api):
     project_tag_meta: sly.TagMeta = _get_or_create_tag_meta(project_id, tag_meta)
     api.image.add_tag(image_id, project_tag_meta.sly_id, value)
 
+
+def _get_selected_labels(ann: sly.Annotation, selected_objects):
+    if not selected_objects:
+        raise ValueError("Select at least two bitmap objects to merge.")
+
+    labels = []
+    for label in ann.labels:
+        sly_id = str(label.geometry.sly_id)
+        if sly_id in selected_objects and selected_objects[sly_id] is True:
+            labels.append(label)
+    return labels
+
+
+def _merge_bitmap_labels(labels, img_size, user_login):
+    if len(labels) < 2:
+        raise ValueError("Select at least two bitmap objects to merge.")
+
+    non_bitmap_labels = [
+        label.obj_class.name
+        for label in labels
+        if not isinstance(label.geometry, sly.Bitmap)
+    ]
+    if len(non_bitmap_labels) > 0:
+        raise ValueError("Merge is available only for bitmap objects.")
+
+    class_names = {label.obj_class.name for label in labels}
+    if len(class_names) > 1:
+        raise ValueError("Selected bitmap objects must belong to the same class.")
+
+    merged_mask = np.full(img_size, False, bool)
+    for label in labels:
+        geometry = label.geometry
+        origin = geometry.origin
+        mask = geometry.data
+        merged_mask[
+            origin.row:origin.row + mask.shape[0],
+            origin.col:origin.col + mask.shape[1],
+        ] |= mask
+
+    merged_geometry = sly.Bitmap(merged_mask, labeler_login=user_login)
+    return sly.Label(merged_geometry, labels[0].obj_class)
+
+
+def _set_merge_message(message, message_type):
+    g.api.task.set_fields(g.task_id, [
+        {"field": "data.mergeMessage", "payload": message},
+        {"field": "data.mergeMessageType", "payload": message_type},
+    ])
 
 
