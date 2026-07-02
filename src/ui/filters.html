@@ -108,6 +108,7 @@
                                         || new Set(data.objects.filter(obj => state.objCheck[obj.objId]).map(obj => obj.objClass)).size !== 1)">
                 Merge selected masks
             </el-checkbox>
+            <br>
             <el-button v-if="data.objects"
                        class="regular" size="small"
                        type="primary"
