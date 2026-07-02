@@ -98,9 +98,24 @@
                     There are no objects on image
                 </div>
             </sly-field>
+            <el-checkbox v-if="data.objects"
+                         style="display: block; margin-top: 10px;"
+                         class="small"
+                         v-model="state.mergeBitmapObjects"
+                         :disabled="!state.mergeBitmapObjects
+                                    && (data.objects.filter(obj => state.objCheck[obj.objId]).length < 2
+                                        || data.objects.filter(obj => state.objCheck[obj.objId]).some(obj => obj.shape !== 'bitmap')
+                                        || new Set(data.objects.filter(obj => state.objCheck[obj.objId]).map(obj => obj.objClass)).size !== 1)">
+                Merge selected masks
+            </el-checkbox>
+            <br>
             <el-button v-if="data.objects"
                        class="regular" size="small"
                        type="primary"
+                       :disabled="state.mergeBitmapObjects
+                                  && (data.objects.filter(obj => state.objCheck[obj.objId]).length < 2
+                                      || data.objects.filter(obj => state.objCheck[obj.objId]).some(obj => obj.shape !== 'bitmap')
+                                      || new Set(data.objects.filter(obj => state.objCheck[obj.objId]).map(obj => obj.objClass)).size !== 1)"
                        @click="command('show_selected_objects')">
                 Show selected objects
             </el-button>
@@ -108,9 +123,20 @@
                        style="margin-left: 0px; margin-top: 10px;"
                        class="regular" size="small"
                        type="success"
+                       :disabled="state.mergeBitmapObjects
+                                  && (data.objects.filter(obj => state.objCheck[obj.objId]).length < 2
+                                      || data.objects.filter(obj => state.objCheck[obj.objId]).some(obj => obj.shape !== 'bitmap')
+                                      || new Set(data.objects.filter(obj => state.objCheck[obj.objId]).map(obj => obj.objClass)).size !== 1)"
                        @click="command('copy_objects')">
                 Copy selected objects <i class="zmdi zmdi-arrow-right ml5"></i>
             </el-button>
+            <el-alert v-if="data.mergeMessage"
+                      style="margin-top: 10px;"
+                      :title="data.mergeMessage"
+                      :type="data.mergeMessageType"
+                      :closable="false"
+                      show-icon>
+            </el-alert>
         </div>
         <div v-else>
             There are no objects on image

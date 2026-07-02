@@ -1,6 +1,7 @@
 from collections import defaultdict
 
 import gallery
+import numpy as np
 import supervisely as sly
 import globals as g
 import cache
@@ -18,9 +19,13 @@ def init(data, state):
 
     data["objects"] = None
     state["objCheck"] = None
+    state["mergeBitmapObjects"] = False
 
     data["tagTable"] = None
     state["tagTableCheck"] = None
+
+    data["mergeMessage"] = None
+    data["mergeMessageType"] = "info"
 
     state["firstState"] = None
     state["firstAnnotation"] = {"labels": 0, "tags": 0}
@@ -131,7 +136,10 @@ def refresh(context, users, classes, tags, first_state=None, ann=None):
         {"field": "state.tagCheck", "payload": tagCheck},
 
         {"field": "state.firstState", "payload": first_state},
-        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}}
+        {"field": "state.firstAnnotation", "payload": {'labels': len(ann.labels), 'img_tags': len(ann.img_tags)}},
+        {"field": "state.mergeBitmapObjects", "payload": False},
+        {"field": "data.mergeMessage", "payload": None},
+        {"field": "data.mergeMessageType", "payload": "info"},
         # {"field": "data.objects", "payload": None},
         # {"field": "state.objCheck", "payload": None},
     ]
@@ -224,15 +232,28 @@ def show_selected_objects(api: sly.Api, task_id, context, state, app_logger):
     project_id = context["projectId"]
     image_id = context["imageId"]
 
+    user_id = context["userId"]
+    user_login = cache.get_user_login(user_id)
+
     project_meta = cache.get_meta(project_id)
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id)
 
-    res_labels = []
-    for label in ann.labels:
-        sly_id = str(label.geometry.sly_id)
-        if sly_id in selected_objects and selected_objects[sly_id] is True:
-            res_labels.append(label)
+    try:
+        if state.get("mergeBitmapObjects", False) is True:
+            selected_labels = _get_selected_labels(ann, selected_objects)
+            res_labels = [_merge_bitmap_labels(selected_labels, ann.img_size, user_login)]
+        else:
+            res_labels = []
+            for label in ann.labels:
+                sly_id = str(label.geometry.sly_id)
+                if sly_id in selected_objects and selected_objects[sly_id] is True:
+                    res_labels.append(label)
+        _set_merge_message(None, "info")
+    except ValueError as e:
+        _set_merge_message(str(e), "error")
+        sly.logger.warning("Unable to preview merged bitmap objects", exc_info=True)
+        return
 
     new_ann = ann.clone(labels=res_labels)
 
@@ -260,21 +281,35 @@ def copy_objects(api: sly.Api, task_id, context, state, app_logger):
     image_info = cache.get_image_info(image_id)
     ann = cache.get_annotation(project_id, image_id, optimize=False)
 
-    res_labels = []
-    for label in ann.labels:
-        sly_id = str(label.geometry.sly_id)
-        if sly_id in selected_objects and selected_objects[sly_id] is True:
-            new_geom = label.geometry.clone()
-            new_geom.sly_id = None
-            new_geom.labeler_login = user_login
-            new_geom.updated_at = None
-            new_geom.created_at = None
+    try:
+        if state.get("mergeBitmapObjects", False) is True:
+            selected_labels = _get_selected_labels(ann, selected_objects)
+            merged_label = _merge_bitmap_labels(selected_labels, ann.img_size, user_login)
+            api.annotation.append_labels(image_id, [merged_label])
+            _set_merge_message(
+                f"Merged {len(selected_labels)} bitmap masks into a new '{merged_label.obj_class.name}' object.",
+                "success"
+            )
+        else:
+            res_labels = []
+            for label in ann.labels:
+                sly_id = str(label.geometry.sly_id)
+                if sly_id in selected_objects and selected_objects[sly_id] is True:
+                    new_geom = label.geometry.clone()
+                    new_geom.sly_id = None
+                    new_geom.labeler_login = user_login
+                    new_geom.updated_at = None
+                    new_geom.created_at = None
 
-            new_label = label.clone(geometry=new_geom)
-            res_labels.append(new_label)
+                    new_label = label.clone(geometry=new_geom)
+                    res_labels.append(new_label)
 
-    api.annotation.append_labels(image_id, res_labels)
-    cache.get_annotation(project_id, image_id, optimize=False)
+            api.annotation.append_labels(image_id, res_labels)
+            _set_merge_message(None, "info")
+        cache.get_annotation(project_id, image_id, optimize=False)
+    except ValueError as e:
+        _set_merge_message(str(e), "error")
+        sly.logger.warning("Unable to merge bitmap objects", exc_info=True)
     #new_ann = ann.add_labels(res_labels)
     #cache.update_ann(project_id, image_id, new_ann, api=api)
     if job_id is not None:
@@ -349,4 +384,50 @@ def _assign_tag_to_image(project_id, image_id, tag_meta, value=None, api=g.api):
     api.image.add_tag(image_id, project_tag_meta.sly_id, value)
 
 
+def _get_selected_labels(ann: sly.Annotation, selected_objects):
+    if not selected_objects:
+        raise ValueError("Select at least two bitmap objects to merge.")
 
+    labels = []
+    for label in ann.labels:
+        sly_id = str(label.geometry.sly_id)
+        if sly_id in selected_objects and selected_objects[sly_id] is True:
+            labels.append(label)
+    return labels
+
+
+def _merge_bitmap_labels(labels, img_size, user_login):
+    if len(labels) < 2:
+        raise ValueError("Select at least two bitmap objects to merge.")
+
+    non_bitmap_labels = [
+        label.obj_class.name
+        for label in labels
+        if not isinstance(label.geometry, sly.Bitmap)
+    ]
+    if len(non_bitmap_labels) > 0:
+        raise ValueError("Merge is available only for bitmap objects.")
+
+    class_names = {label.obj_class.name for label in labels}
+    if len(class_names) > 1:
+        raise ValueError("Selected bitmap objects must belong to the same class.")
+
+    merged_mask = np.full(img_size, False, bool)
+    for label in labels:
+        geometry = label.geometry
+        origin = geometry.origin
+        mask = geometry.data
+        merged_mask[
+            origin.row:origin.row + mask.shape[0],
+            origin.col:origin.col + mask.shape[1],
+        ] |= mask
+
+    merged_geometry = sly.Bitmap(merged_mask, labeler_login=user_login)
+    return sly.Label(merged_geometry, labels[0].obj_class)
+
+
+def _set_merge_message(message, message_type):
+    g.api.task.set_fields(g.task_id, [
+        {"field": "data.mergeMessage", "payload": message},
+        {"field": "data.mergeMessageType", "payload": message_type},
+    ])
